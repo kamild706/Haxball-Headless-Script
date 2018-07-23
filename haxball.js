@@ -2,7 +2,7 @@ const hostPlayer = "Arbiter";
 const messagePrefix = ">>>>> ";
 const cmdPrefix = "!";
 const privilegedPlayers = [];
-const slots = 8;
+const slots = 2;
 const goals = {};
 const muted = {
   names: [],
@@ -13,7 +13,7 @@ let cmdManager;
 
 const room = HBInit({
   roomName: "POWER ROOM",
-  maxPlayers: 8,
+  maxPlayers: 9,
   playerName: hostPlayer,
   public : true
 });
@@ -280,7 +280,14 @@ let listAdminCmds = new Cmd("akomendy", {onlyAdmin: true}, function(invokedBy) {
 });
 
 let freeSlotCmd = new Cmd("slot", {onlyAdmin: true}, function(invokedBy) {
-  freeSlot();
+  freeSlot(invokedBy);
+});
+
+let listPlayers = new Cmd("players", {onlyAdmin: true}, function(invokedBy) {
+  const players = room.getPlayerList();
+  for (let player of players) {
+    sendMessage(`Gracz ${player.name}, id ${player.id}`);
+  }
 });
 
 let randomTeams = new Cmd("random (\\d+)", {onlyAdmin: true}, function(invokedBy, playersInTeam) {
@@ -295,7 +302,7 @@ let randomTeams = new Cmd("random (\\d+)", {onlyAdmin: true}, function(invokedBy
   const redPlayers = players.filter(player => player.team === 1);
   const bluePlayers = players.filter(player => player.team === 2);
 
-  if (redPlayers.length >= playersInTeam || bluePlayers.length >= playersInTeam) {
+  if (redPlayers.length > playersInTeam || bluePlayers.length > playersInTeam) {
     return sendMessage(`Drużyny są liczniejsze niż ${playersInTeam} graczy, musisz przenieść graczy na ławkę`);
   }
 
@@ -349,6 +356,7 @@ cmdManager.addCmd(listUserCmds);
 cmdManager.addCmd(listAdminCmds);
 cmdManager.addCmd(freeSlotCmd);
 cmdManager.addCmd(randomTeams);
+cmdManager.addCmd(listPlayers);
 
 function parseCmd(player, message) {
   let cmdData = cmdManager.matchCmd(message);
@@ -392,28 +400,31 @@ function updateAdmins() {
   sendMessage(`Wpisz ${cmdPrefix}m2 aby załadować mapę Power Big`);
 }
 
-function freeSlot() {
-  const players = room.getPlayerList();
+function freeSlot(invokedBy) {
+  const players = room.getPlayerList().filter(player => player.id !== 0);
   if (players.length !== slots) return;
 
-  for (let id = players.length - 1; id > 0; id--) {
+  for (let id = players.length - 1; id >= 0; id--) {
     if (players[id].team === 0 && !players[id].admin && !isPlayerPrivileged(players[id])) {
-      return room.kickPlayer(id, "Potrzebny slot");
+      return room.kickPlayer(players[id].id, "Potrzebny slot");
     }
   }
 
-  for (let id = players.length - 1; id > 0; id--) {
+  for (let id = players.length - 1; id >= 0; id--) {
     if (!players[id].admin && !isPlayerPrivileged(players[id])) {
-      return room.kickPlayer(id, "Potrzebny slot");
+      return room.kickPlayer(players[id].id, "Potrzebny slot");
     }
   }
 
-  for (let id = players.length - 1; id > 0; id--) {
+  for (let id = players.length - 1; id >= 0; id--) {
     if (!isPlayerPrivileged(players[id])) {
-      return room.kickPlayer(id, "Potrzebny slot");
+      if (invokedBy !== undefined && invokedBy.id !== players[id].id && isPlayerPrivileged(invokedBy)) {
+        return room.kickPlayer(players[id].id, "Potrzebny slot");
+      }
     }
   }
 
+  sendMessage("Musisz ręcznie wyrzucić gracza z pokoju");
   console.log("You must kick player manually, all players are privileged");
 }
 
