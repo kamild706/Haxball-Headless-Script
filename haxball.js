@@ -2,7 +2,7 @@ const hostPlayer = "Arbiter";
 const messagePrefix = ">>>>> ";
 const cmdPrefix = "!";
 const privilegedPlayers = [];
-const slots = 2;
+const slots = 9;
 const goals = {};
 const muted = {
   names: [],
@@ -13,7 +13,7 @@ let cmdManager;
 
 const room = HBInit({
   roomName: "POWER ROOM",
-  maxPlayers: 9,
+  maxPlayers: slots,
   playerName: hostPlayer,
   public : true
 });
