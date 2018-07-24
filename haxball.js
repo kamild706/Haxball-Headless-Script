@@ -8,14 +8,28 @@ const muted = {
   names: [],
   ids: [],
 };
+const restrictedPlayers = {
+  names: [],
+  ids: [],
+};
+const maps = {
+  powerClassic: `{"name":"Joe's power classic night edition","width":420,"height":200,"spawnDistance":170,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":370,"y":-170,"trait":"ballAreaVertical"},{"x":370,"y":-64,"trait":"ballAreaVertical"},{"x":370,"y":64,"trait":"ballAreaVertical"},{"x":370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":64,"trait":"ballAreaVertical"},{"x":-370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":-170,"trait":"ballAreaVertical"},{"x":-370,"y":-64,"trait":"ballAreaVertical"},{"x":-400,"y":-54,"trait":"goalNet"},{"x":-400,"y":54,"trait":"goalNet"},{"x":400,"y":-54,"trait":"goalNet"},{"x":400,"y":54,"cMask":["ball"]},{"x":371,"y":-170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":-64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":-371,"y":-170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-171,"cMask":["ball"]},{"x":371,"y":-171,"cMask":["ball"]},{"x":-371,"y":171,"cMask":["ball"]},{"x":371,"y":171,"cMask":["ball"]},{"x":0,"y":75,"trait":"kickOffBarrier"},{"x":0,"y":170,"trait":"kickOffBarrier"},{"x":0,"y":-170,"trait":"kickOffBarrier"},{"x":0,"y":-75,"trait":"kickOffBarrier"},{"x":0,"y":200,"trait":"kickOffBarrier"},{"x":0,"y":-200,"trait":"kickOffBarrier"},{"x":-383,"y":-170,"trait":"bugFix"},{"x":-383,"y":-64,"trait":"bugFix"},{"x":-383,"y":64,"trait":"bugFix"},{"x":-383,"y":170,"trait":"bugFix"},{"x":383,"y":-170,"trait":"bugFix"},{"x":383,"y":-64,"trait":"bugFix"},{"x":383,"y":64,"trait":"bugFix"},{"x":383,"y":170,"trait":"bugFix"}],"segments":[{"v0":0,"v1":1,"trait":"ballAreaVertical"},{"v0":2,"v1":3,"trait":"ballAreaVertical"},{"v0":4,"v1":5,"trait":"ballAreaVertical"},{"v0":6,"v1":7,"trait":"ballAreaVertical"},{"v0":12,"v1":13,"bCoef":0,"trait":"ballAreaVertical"},{"v0":14,"v1":15,"bCoef":0,"trait":"ballAreaVertical"},{"v0":16,"v1":17,"bCoef":0,"trait":"ballAreaVertical"},{"v0":18,"v1":19,"bCoef":0,"trait":"ballAreaVertical"},{"v0":24,"v1":25,"trait":"kickOffBarrier"},{"v0":26,"v1":27,"trait":"kickOffBarrier"},{"v0":6,"v1":0,"trait":"ballAreaHorizontal"},{"v0":5,"v1":3,"trait":"ballAreaHorizontal"},{"v0":20,"v1":21,"trait":"ballAreaHorizontal"},{"v0":22,"v1":23,"trait":"ballAreaHorizontal"},{"v0":1,"v1":2,"trait":"goalLine"},{"v0":7,"v1":4,"trait":"goalLine"},{"v0":13,"v1":15,"trait":"goalLine"},{"v0":17,"v1":18,"trait":"goalLine"},{"v0":7,"v1":8,"trait":"goalNet"},{"v0":8,"v1":9,"trait":"goalNet"},{"v0":9,"v1":4,"trait":"goalNet"},{"v0":1,"v1":10,"trait":"goalNet"},{"v0":10,"v1":11,"trait":"goalNet"},{"v0":11,"v1":2,"trait":"goalNet"},{"v0":27,"v1":24,"color":"ffffff","trait":"line"},{"v0":27,"v1":24,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":27,"v1":24,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":25,"v1":28,"vis":false,"trait":"kickOffBarrier"},{"v0":26,"v1":29,"vis":false,"trait":"kickOffBarrier"},{"v0":30,"v1":31,"trait":"bugFix"},{"v0":32,"v1":33,"trait":"bugFix"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"}],"goals":[{"p0":[-383,-64],"p1":[-383,64],"team":"red"},{"p0":[383,-64],"p1":[383,64],"team":"blue"}],"discs":[{"pos":[-370,-64],"trait":"goalPost"},{"pos":[-370,64],"trait":"goalPost"},{"pos":[370,-64],"trait":"goalPost"},{"pos":[370,64],"trait":"goalPost"}],"planes":[{"normal":[0,1],"dist":-200},{"normal":[0,-1],"dist":-200},{"normal":[-1,0],"dist":-420},{"normal":[1,0],"dist":-420},{"normal":[0,1],"dist":-170,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-170,"bCoef":1,"cMask":["ball"]}],"traits":{"ballAreaVertical":{"vis":true,"color":"C7C730","bCoef":1,"cMask":["ball"]},"ballAreaHorizontal":{"vis":true,"color":"363333","bCoef":0,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"goalLine":{"vis":true,"cMask":["wall"],"bCoef":0,"color":"ffffff"},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`,
+  powerBig: `{"name":"Joe's power big night edition","width":600,"height":270,"spawnDistance":350,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":-550,"y":240,"cMask":["ball"]},{"x":550,"y":240,"cMask":["ball"]},{"x":-550,"y":-240,"cMask":["ball"],"trait":"ballArea"},{"x":550,"y":-240,"cMask":["ball"]},{"x":-550,"y":-80,"cMask":["ball"],"trait":"ballArea","color":"363333"},{"x":-550,"y":80,"cMask":["ball"]},{"x":550,"y":-80,"cMask":["ball"],"pos":[550,-80]},{"x":550,"y":80,"cMask":["ball"]},{"x":0,"y":-240,"trait":"kickOffBarrier"},{"x":0,"y":-80,"trait":"kickOffBarrier"},{"x":0,"y":80,"trait":"kickOffBarrier"},{"x":0,"y":240,"trait":"kickOffBarrier"},{"x":0,"y":-270,"trait":"kickOffBarrier"},{"x":0,"y":270,"trait":"kickOffBarrier"},{"x":-580,"y":-70,"cMask":["ball"]},{"x":-580,"y":70,"cMask":["ball"]},{"x":580,"y":-70,"cMask":["ball"]},{"x":580,"y":70,"cMask":["ball"]},{"x":-551,"y":-241,"trait":"line"},{"x":551,"y":-241,"trait":"line"},{"x":-551,"y":241,"cMask":["ball"]},{"x":551,"y":241,"cMask":["ball"]},{"x":551,"y":-240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":551,"y":240,"cMask":["ball"]},{"x":-551,"y":-240,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":-80,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":80,"cMask":["ball"]},{"x":-551,"y":240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":-551,"y":-80,"cMask":["ball"]},{"x":-551,"y":80,"cMask":["ball"]},{"x":-563,"y":-240,"trait":"bugFix"},{"x":-563,"y":-80,"trait":"bugFix"},{"x":-563,"y":80,"trait":"bugFix"},{"x":-563,"y":240,"trait":"bugFix"},{"x":563,"y":80,"trait":"bugFix"},{"x":563,"y":240,"trait":"bugFix"},{"x":563,"y":-240,"trait":"bugFix"},{"x":563,"y":-80,"trait":"bugFix"}],"segments":[{"v0":2,"v1":4,"color":"C7C730","trait":"ballArea"},{"v0":0,"v1":5,"color":"C7C730","trait":"ballArea"},{"v0":3,"v1":6,"color":"C7C730","trait":"ballArea"},{"v0":1,"v1":7,"color":"C7C730","trait":"ballArea"},{"v0":22,"v1":23,"color":"C7C730","trait":"line"},{"v0":24,"v1":25,"color":"C7C730","trait":"line"},{"v0":26,"v1":27,"color":"C7C730","trait":"line"},{"v0":28,"v1":29,"color":"C7C730","trait":"line"},{"v0":6,"v1":7,"color":"ffffff","trait":"line"},{"v0":4,"v1":5,"color":"ffffff","trait":"line"},{"v0":8,"v1":9,"trait":"kickOffBarrier"},{"v0":10,"v1":11,"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"color":"ffffff","trait":"line"},{"v0":8,"v1":12,"vis":false,"trait":"kickOffBarrier"},{"v0":11,"v1":13,"vis":false,"trait":"kickOffBarrier"},{"v0":0,"v1":1,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":2,"v1":3,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":18,"v1":19,"color":"363333","trait":"line"},{"v0":20,"v1":21,"color":"363333","trait":"line"},{"v0":4,"v1":14,"trait":"goalNet"},{"v0":5,"v1":15,"trait":"goalNet"},{"v0":14,"v1":15,"trait":"goalNet"},{"v0":6,"v1":16,"trait":"goalNet"},{"v0":16,"v1":17,"trait":"goalNet"},{"v0":17,"v1":7,"trait":"goalNet"},{"v0":30,"v1":31,"color":"ffffff","trait":"line"},{"v0":32,"v1":33,"color":"ffffff","trait":"line"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"},{"v0":38,"v1":39,"trait":"bugFix"},{"v0":40,"v1":41,"trait":"bugFix"}],"goals":[{"p0":[-563,-80],"p1":[-563,80],"team":"red"},{"p0":[563,-80],"p1":[563,80],"team":"blue"}],"discs":[{"pos":[-550,-80],"trait":"goalPost"},{"pos":[-550,80],"trait":"goalPost"},{"pos":[550,-80],"trait":"goalPost"},{"pos":[550,80],"trait":"goalPost"}],"planes":[{"normal":[-1,0],"dist":-600},{"normal":[1,0],"dist":-600},{"normal":[0,1],"dist":-270},{"normal":[0,-1],"dist":-270},{"normal":[0,1],"dist":-240,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-240,"bCoef":1,"cMask":["ball"]}],"traits":{"ballArea":{"vis":true,"bCoef":1,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`,
+};
 let ballKickedBy = null;
 let cmdManager;
+let showGoalInfo = true;
 
 const room = HBInit({
-  roomName: "POWER ROOM",
+  roomName: "POWER GAME v2 v3",
   maxPlayers: slots,
   playerName: hostPlayer,
-  public : true
+  public : true,
+  geo: {
+    code: "PL",
+    lat: 53,
+    lon: 23
+  }
 });
 
 room.onPlayerBallKick = player => {
@@ -23,8 +37,9 @@ room.onPlayerBallKick = player => {
 };
 
 room.onTeamGoal = team => {
-  if (ballKickedBy !== null) {
-    sendMessage(`Strzał oddał gracz ${ballKickedBy}`);
+  if (ballKickedBy) {
+    if (showGoalInfo)
+      sendMessage(`Strzał oddał gracz ${ballKickedBy}`);
     
     let score = goals[ballKickedBy] | 0;
     goals[ballKickedBy] = score + 1;
@@ -34,6 +49,8 @@ room.onTeamGoal = team => {
 
 room.onPlayerChat = (player, message) => {
   if (message.startsWith(cmdPrefix)) {
+    if (!canPlayerInvokeCmd(player)) return false;
+
     let showMessage =  parseCmd(player, message.substring(1));
     return showMessage && !isPlayerMuted(player);
   }
@@ -47,7 +64,7 @@ room.onPlayerKicked = (kickedPlayer, reason, ban, byPlayer) => {
       room.clearBans();
 
     room.setPlayerAdmin(byPlayer.id, false);
-    sendMessage("Próba wyrzucenia super administratora!");
+    sendMessage("Próba wyrzucenia superadministratora!");
   }
 };
 
@@ -61,6 +78,14 @@ room.onPlayerAdminChange = (changedPlayer, byPlayer) => {
     }
   }
 };
+
+room.onStadiumChange = (newStadiumName, byPlayer) => {
+  if (!/power/i.exec(newStadiumName) && !isPlayerPrivileged(byPlayer)) {
+    sendMessage("Tylko Superadministrator może załadować mapę inną niż Power");
+    showMapCmds();
+    room.setCustomStadium(maps.powerClassic);
+  }
+}
 
 room.onPlayerJoin = player => {
   updateAdmins();
@@ -142,11 +167,13 @@ class Cmd {
   }
 }
 
-let mutePlayerByName = new Cmd("mute (\\w+)", {onlyAdmin: true}, function(invokedBy, nameToMute) {
+let mutePlayerByName = new Cmd("mute (.+)", {onlyAdmin: true}, function(invokedBy, nameToMute) {
   let player = room.getPlayerList().filter(player => player.name === nameToMute)[0];
   if (player) {
-    if (muted.names.includes(nameToMute)) {
-      sendMessage(`${nameToMute} jest już wyciszony`);
+    if (isPlayerMuted(player)) {
+      let index = muted.names.indexOf(nameToMute);
+      muted.names.splice(index, 1);
+      sendMessage(`${nameToMute} został odciszony przez ${invokedBy.name}`);
     } else {
       muted.names.push(nameToMute);
       sendMessage(`${nameToMute} został wyciszony przez ${invokedBy.name}`);
@@ -156,20 +183,18 @@ let mutePlayerByName = new Cmd("mute (\\w+)", {onlyAdmin: true}, function(invoke
   }
 });
 
-let unmutePlayerByName = new Cmd("unmute (\\w+)", {onlyAdmin: true}, function(invokedBy, nameToUnmute) {
-  let index = muted.names.indexOf(nameToUnmute);
-  if (index !== -1) {
-    muted.names.splice(index, 1);
-    sendMessage(`${nameToUnmute} został odciszony przez ${invokedBy.name}`);
-  } else {
-    sendMessage(`${nameToUnmute} nie był wyciszony`);
-  }
-});
-
 let mutePlayerById = new Cmd("muteid (\\d+)", {onlyAdmin: true}, function(invokedBy, idToMute) {
   idToMute = Number(idToMute);
+  let index = muted.ids.indexOf(idToMute);
   let player = room.getPlayerList().filter(player => player.id === idToMute)[0];
-  if (player) {
+  if (index !== -1) {
+    muted.ids.splice(index, 1);
+    if (player) {
+      sendMessage(`${player.name} został odciszony przez ${invokedBy.name}`);
+    } else {
+      sendMessage(`Id ${idToMute} zostało odciszone przez ${invokedBy.name}`);
+    }
+  } else if (player) {
     muted.ids.push(idToMute);
     sendMessage(`${player.name} został wyciszony przez ${invokedBy.name}`);
   } else {
@@ -177,56 +202,28 @@ let mutePlayerById = new Cmd("muteid (\\d+)", {onlyAdmin: true}, function(invoke
   }
 });
 
-let unmutePlayerById = new Cmd("unmuteid (\\d+)", {onlyAdmin: true}, function(invokedBy, idToUnmute) {
-  idToUnmute = Number(idToUnmute);
-  let index = muted.ids.indexOf(idToUnmute);
-  let player = room.getPlayerList().filter(player => player.id === idToUnmute)[0];
-  if (index !== -1) {
-    muted.ids.splice(index, 1);
-    if (player) {
-      sendMessage(`${player.name} został odciszony przez ${invokedBy.name}`);
-    } else {
-      sendMessage(`${idToUnmute} zostało odciszone przez ${invokedBy.name}`);
-    }
-  } else {
-    if (player) {
-      sendMessage(`${player.name} nie był wyciszony`);
-    } else {
-      sendMessage(`${idToUnmute} nie było wyciszone`);
-    }
-  }
-});
-
-let silentMutePlayerByName = new Cmd("smute (\\w+)", {onlyAdmin: true}, function(invokedBy, nameToMute) {
+let silentMutePlayerByName = new Cmd("smute (.+)", {onlyAdmin: true}, function(invokedBy, nameToMute) {
   let player = room.getPlayerList().filter(player => player.name === nameToMute)[0];
-  if (player) {
-    if (muted.names.includes(nameToMute)) {
-    } else {
-      muted.names.push(nameToMute);
+  if (player && !isPlayerMuted(player)) {
+    muted.names.push(nameToMute);
+  } else {
+    let index = muted.names.indexOf(nameToMute);
+    if (index !== -1) {
+      muted.names.splice(index, 1);
     }
-  }
-});
-
-let silentUnmutePlayerByName = new Cmd("sunmute (\\w+)", {onlyAdmin: true}, function(invokedBy, nameToUnmute) {
-  let index = muted.names.indexOf(nameToUnmute);
-  if (index !== -1) {
-    muted.names.splice(index, 1);
   }
 });
 
 let silentMutePlayerById = new Cmd("smuteid (\\d+)", {onlyAdmin: true}, function(invokedBy, idToMute) {
   idToMute = Number(idToMute);
   let player = room.getPlayerList().filter(player => player.id === idToMute)[0];
-  if (player) {
+  if (player && !isPlayerMuted(player)) {
     muted.ids.push(idToMute);
-  }
-});
-
-let silentUnmutePlayerById = new Cmd("sunmuteid (\\d+)", {onlyAdmin: true}, function(invokedBy, idToUnmute) {
-  idToUnmute = Number(idToUnmute);
-  let index = muted.ids.indexOf(idToUnmute);
-  if (index !== -1) {
-    muted.ids.splice(index, 1);
+  } else {
+    let index = muted.ids.indexOf(idToMute);
+    if (index !== -1) {
+      muted.ids.splice(index, 1);
+    }
   }
 });
 
@@ -242,41 +239,74 @@ let adminLogout = new Cmd("logout", {onlyAdmin: true}, function(invokedBy) {
 });
 
 let clearBans = new Cmd("clearbans", {onlyAdmin: true}, function(invokedBy) {
-  room.clearBans();
-  sendMessage(`Bany zostały skasowane przez ${invokedBy.name}`);
+  clearAllBans(invokedBy.name);
+});
+
+let clearMutes = new Cmd("clearmutes", {onlyAdmin: true}, function(invokedBy) {
+  clearAllMutes(invokedBy.name);
+});
+
+let muteAll = new Cmd("muteall", {onlyAdmin: true}, function(invokedBy) {
+  const players = room.getPlayerList().filter(player => player.id !== 0);
+  for (let player of players) {
+    if (player.name !== invokedBy.name)
+      muted.names.push(player.name);
+  }
+  sendMessage(`Wszyscy gracze zostali wyciszeni przez ${invokedBy.name}`);
+});
+
+let clearCmdRestrictions = new Cmd("clearcmdbans", {onlyAdmin: true}, function(invokedBy) {
+  clearAllRestrictedPlayers(invokedBy.name);
 });
 
 let loadClassicMap = new Cmd("m1", {onlyAdmin: true}, function(invokedBy) {
-  let map = `{"name":"Joe's power classic night edition","width":420,"height":200,"spawnDistance":170,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":370,"y":-170,"trait":"ballAreaVertical"},{"x":370,"y":-64,"trait":"ballAreaVertical"},{"x":370,"y":64,"trait":"ballAreaVertical"},{"x":370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":64,"trait":"ballAreaVertical"},{"x":-370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":-170,"trait":"ballAreaVertical"},{"x":-370,"y":-64,"trait":"ballAreaVertical"},{"x":-400,"y":-54,"trait":"goalNet"},{"x":-400,"y":54,"trait":"goalNet"},{"x":400,"y":-54,"trait":"goalNet"},{"x":400,"y":54,"cMask":["ball"]},{"x":371,"y":-170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":-64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":-371,"y":-170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-171,"cMask":["ball"]},{"x":371,"y":-171,"cMask":["ball"]},{"x":-371,"y":171,"cMask":["ball"]},{"x":371,"y":171,"cMask":["ball"]},{"x":0,"y":75,"trait":"kickOffBarrier"},{"x":0,"y":170,"trait":"kickOffBarrier"},{"x":0,"y":-170,"trait":"kickOffBarrier"},{"x":0,"y":-75,"trait":"kickOffBarrier"},{"x":0,"y":200,"trait":"kickOffBarrier"},{"x":0,"y":-200,"trait":"kickOffBarrier"},{"x":-383,"y":-170,"trait":"bugFix"},{"x":-383,"y":-64,"trait":"bugFix"},{"x":-383,"y":64,"trait":"bugFix"},{"x":-383,"y":170,"trait":"bugFix"},{"x":383,"y":-170,"trait":"bugFix"},{"x":383,"y":-64,"trait":"bugFix"},{"x":383,"y":64,"trait":"bugFix"},{"x":383,"y":170,"trait":"bugFix"}],"segments":[{"v0":0,"v1":1,"trait":"ballAreaVertical"},{"v0":2,"v1":3,"trait":"ballAreaVertical"},{"v0":4,"v1":5,"trait":"ballAreaVertical"},{"v0":6,"v1":7,"trait":"ballAreaVertical"},{"v0":12,"v1":13,"bCoef":0,"trait":"ballAreaVertical"},{"v0":14,"v1":15,"bCoef":0,"trait":"ballAreaVertical"},{"v0":16,"v1":17,"bCoef":0,"trait":"ballAreaVertical"},{"v0":18,"v1":19,"bCoef":0,"trait":"ballAreaVertical"},{"v0":24,"v1":25,"trait":"kickOffBarrier"},{"v0":26,"v1":27,"trait":"kickOffBarrier"},{"v0":6,"v1":0,"trait":"ballAreaHorizontal"},{"v0":5,"v1":3,"trait":"ballAreaHorizontal"},{"v0":20,"v1":21,"trait":"ballAreaHorizontal"},{"v0":22,"v1":23,"trait":"ballAreaHorizontal"},{"v0":1,"v1":2,"trait":"goalLine"},{"v0":7,"v1":4,"trait":"goalLine"},{"v0":13,"v1":15,"trait":"goalLine"},{"v0":17,"v1":18,"trait":"goalLine"},{"v0":7,"v1":8,"trait":"goalNet"},{"v0":8,"v1":9,"trait":"goalNet"},{"v0":9,"v1":4,"trait":"goalNet"},{"v0":1,"v1":10,"trait":"goalNet"},{"v0":10,"v1":11,"trait":"goalNet"},{"v0":11,"v1":2,"trait":"goalNet"},{"v0":27,"v1":24,"color":"ffffff","trait":"line"},{"v0":27,"v1":24,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":27,"v1":24,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":25,"v1":28,"vis":false,"trait":"kickOffBarrier"},{"v0":26,"v1":29,"vis":false,"trait":"kickOffBarrier"},{"v0":30,"v1":31,"trait":"bugFix"},{"v0":32,"v1":33,"trait":"bugFix"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"}],"goals":[{"p0":[-383,-64],"p1":[-383,64],"team":"red"},{"p0":[383,-64],"p1":[383,64],"team":"blue"}],"discs":[{"pos":[-370,-64],"trait":"goalPost"},{"pos":[-370,64],"trait":"goalPost"},{"pos":[370,-64],"trait":"goalPost"},{"pos":[370,64],"trait":"goalPost"}],"planes":[{"normal":[0,1],"dist":-200},{"normal":[0,-1],"dist":-200},{"normal":[-1,0],"dist":-420},{"normal":[1,0],"dist":-420},{"normal":[0,1],"dist":-170,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-170,"bCoef":1,"cMask":["ball"]}],"traits":{"ballAreaVertical":{"vis":true,"color":"C7C730","bCoef":1,"cMask":["ball"]},"ballAreaHorizontal":{"vis":true,"color":"363333","bCoef":0,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"goalLine":{"vis":true,"cMask":["wall"],"bCoef":0,"color":"ffffff"},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`;
-  room.setCustomStadium(map);
+  room.setCustomStadium(maps.powerClassic);
 });
 
 let loadBigMap = new Cmd("m2", {onlyAdmin: true}, function(invokedBy) {
-  let map = `{"name":"Joe's power big night edition","width":600,"height":270,"spawnDistance":350,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":-550,"y":240,"cMask":["ball"]},{"x":550,"y":240,"cMask":["ball"]},{"x":-550,"y":-240,"cMask":["ball"],"trait":"ballArea"},{"x":550,"y":-240,"cMask":["ball"]},{"x":-550,"y":-80,"cMask":["ball"],"trait":"ballArea","color":"363333"},{"x":-550,"y":80,"cMask":["ball"]},{"x":550,"y":-80,"cMask":["ball"],"pos":[550,-80]},{"x":550,"y":80,"cMask":["ball"]},{"x":0,"y":-240,"trait":"kickOffBarrier"},{"x":0,"y":-80,"trait":"kickOffBarrier"},{"x":0,"y":80,"trait":"kickOffBarrier"},{"x":0,"y":240,"trait":"kickOffBarrier"},{"x":0,"y":-270,"trait":"kickOffBarrier"},{"x":0,"y":270,"trait":"kickOffBarrier"},{"x":-580,"y":-70,"cMask":["ball"]},{"x":-580,"y":70,"cMask":["ball"]},{"x":580,"y":-70,"cMask":["ball"]},{"x":580,"y":70,"cMask":["ball"]},{"x":-551,"y":-241,"trait":"line"},{"x":551,"y":-241,"trait":"line"},{"x":-551,"y":241,"cMask":["ball"]},{"x":551,"y":241,"cMask":["ball"]},{"x":551,"y":-240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":551,"y":240,"cMask":["ball"]},{"x":-551,"y":-240,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":-80,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":80,"cMask":["ball"]},{"x":-551,"y":240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":-551,"y":-80,"cMask":["ball"]},{"x":-551,"y":80,"cMask":["ball"]},{"x":-563,"y":-240,"trait":"bugFix"},{"x":-563,"y":-80,"trait":"bugFix"},{"x":-563,"y":80,"trait":"bugFix"},{"x":-563,"y":240,"trait":"bugFix"},{"x":563,"y":80,"trait":"bugFix"},{"x":563,"y":240,"trait":"bugFix"},{"x":563,"y":-240,"trait":"bugFix"},{"x":563,"y":-80,"trait":"bugFix"}],"segments":[{"v0":2,"v1":4,"color":"C7C730","trait":"ballArea"},{"v0":0,"v1":5,"color":"C7C730","trait":"ballArea"},{"v0":3,"v1":6,"color":"C7C730","trait":"ballArea"},{"v0":1,"v1":7,"color":"C7C730","trait":"ballArea"},{"v0":22,"v1":23,"color":"C7C730","trait":"line"},{"v0":24,"v1":25,"color":"C7C730","trait":"line"},{"v0":26,"v1":27,"color":"C7C730","trait":"line"},{"v0":28,"v1":29,"color":"C7C730","trait":"line"},{"v0":6,"v1":7,"color":"ffffff","trait":"line"},{"v0":4,"v1":5,"color":"ffffff","trait":"line"},{"v0":8,"v1":9,"trait":"kickOffBarrier"},{"v0":10,"v1":11,"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"color":"ffffff","trait":"line"},{"v0":8,"v1":12,"vis":false,"trait":"kickOffBarrier"},{"v0":11,"v1":13,"vis":false,"trait":"kickOffBarrier"},{"v0":0,"v1":1,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":2,"v1":3,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":18,"v1":19,"color":"363333","trait":"line"},{"v0":20,"v1":21,"color":"363333","trait":"line"},{"v0":4,"v1":14,"trait":"goalNet"},{"v0":5,"v1":15,"trait":"goalNet"},{"v0":14,"v1":15,"trait":"goalNet"},{"v0":6,"v1":16,"trait":"goalNet"},{"v0":16,"v1":17,"trait":"goalNet"},{"v0":17,"v1":7,"trait":"goalNet"},{"v0":30,"v1":31,"color":"ffffff","trait":"line"},{"v0":32,"v1":33,"color":"ffffff","trait":"line"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"},{"v0":38,"v1":39,"trait":"bugFix"},{"v0":40,"v1":41,"trait":"bugFix"}],"goals":[{"p0":[-563,-80],"p1":[-563,80],"team":"red"},{"p0":[563,-80],"p1":[563,80],"team":"blue"}],"discs":[{"pos":[-550,-80],"trait":"goalPost"},{"pos":[-550,80],"trait":"goalPost"},{"pos":[550,-80],"trait":"goalPost"},{"pos":[550,80],"trait":"goalPost"}],"planes":[{"normal":[-1,0],"dist":-600},{"normal":[1,0],"dist":-600},{"normal":[0,1],"dist":-270},{"normal":[0,-1],"dist":-270},{"normal":[0,1],"dist":-240,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-240,"bCoef":1,"cMask":["ball"]}],"traits":{"ballArea":{"vis":true,"bCoef":1,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`;
-  room.setCustomStadium(map);
+  room.setCustomStadium(maps.powerBig);
 });
 
 let listAllGoals = new Cmd("goals", {showInChat: true}, function(invokedBy) {
   for (let scorer in goals) {
-    sendMessage(`Gracz ${scorer} bramek ${goals[scorer]}`);
+    sendMessage(`Gracz ${scorer} bramek ${goals[scorer]}`, invokedBy);
   }
 });
 
-let listPlayerGoals = new Cmd("goals (\\w+)", {showInChat: true}, function(invokedBy, player) {
-  let score = goals[player] | 0;
-  sendMessage(`Gracz ${player} bramek ${score}`);
+let listTopPlayers = new Cmd("top5", {showInChat: true}, function(invokedBy) {
+  let props = Object.keys(goals).map(function(key) {
+    return { key: key, value: this[key] };
+  }, goals);
+
+  props.sort((p1, p2) => p2.value - p1.value);
+  let top5 = props.splice(0, 5);
+  
+  for (let player of top5) {
+    sendMessage(`Gracz ${player.key} bramek ${player.value}`, invokedBy);
+  }
 });
 
-let listUserCmds = new Cmd("komendy", {schowInChat: true}, function(invokedBy) {
+let listPlayerGoals = new Cmd("goals (.+)", {showInChat: true}, function(invokedBy, player) {
+  let score = goals[player] | 0;
+  sendMessage(`Gracz ${player} bramek ${score}`, invokedBy);
+});
+
+let listUserCmds = new Cmd("komendy", {showInChat: true}, function(invokedBy) {
   let list = cmdManager.listCmds("regular");
   list = list.filter(cmd => cmd !== cmdPrefix + "login");
-  sendMessage(list.join(" "));
+  while (list.length > 0) {
+    let cmds = list.splice(0, 8);
+    sendMessage(cmds.join(" "));
+  }
 });
 
 let listAdminCmds = new Cmd("akomendy", {onlyAdmin: true}, function(invokedBy) {
   let list = cmdManager.listCmds("admin");
   list = list.filter(cmd => cmd !== cmdPrefix + "login");
-  sendMessage(list.join(" "));
+  while (list.length > 0) {
+    let cmds = list.splice(0, 8);
+    sendMessage(cmds.join(" "));
+  }
 });
 
 let freeSlotCmd = new Cmd("slot", {onlyAdmin: true}, function(invokedBy) {
@@ -287,6 +317,53 @@ let listPlayers = new Cmd("players", {onlyAdmin: true}, function(invokedBy) {
   const players = room.getPlayerList();
   for (let player of players) {
     sendMessage(`Gracz ${player.name}, id ${player.id}`);
+  }
+});
+
+let goalInfoCmd = new Cmd("showgoal", {onlyAdmin: true}, function(invokedBy) {
+  showGoalInfo = !showGoalInfo;
+  sendMessage(`Informacje o golu zostały ${showGoalInfo ? "włączone" : "wyłączone"} przez ${invokedBy.name}`);
+});
+
+let giveSuperadmin = new Cmd("givesa (.+)", {onlyAdmin: true}, function(invokedBy, playerName) {
+  if (isPlayerPrivileged(invokedBy)) return;
+  const player = room.getPlayerList().filter(player => player.name === playerName)[0];
+  if (player) {
+    privilegedPlayers.push(playerName);
+    sendMessage("Done");
+  }
+});
+
+let stopCmdForPlayerByName = new Cmd("bancmd (.+)", {onlyAdmin: true}, function(invokedBy, playerName) {
+  const player = room.getPlayerList().filter(player => player.name === playerName)[0];
+  if (player) {
+    if (canPlayerInvokeCmd(player)) {
+      restrictedPlayers.names.push(playerName);
+      sendMessage(`Gracz ${playerName} został pozbawiony możliwości wywoływania komend przez ${invokedBy.name}`);
+    } else {
+      let id = restrictedPlayers.names.indexOf(playerName);
+      restrictedPlayers.names.splice(id, 1);
+      sendMessage(`Gracz ${playerName} otrzymał możliwość wywoływania komend przez ${invokedBy.name}`);
+    }
+  } else {
+    sendMessage(`Gracz ${playerName} nie został znaleziony`);
+  }
+});
+
+let stopCmdForPlayerById = new Cmd("bancmdid (\\d+)", {onlyAdmin: true}, function(invokedBy, playerId) {
+  playerId = Number(playerId);
+  const player = room.getPlayerList().filter(player => player.id === playerId)[0];
+  if (player) {
+    if (canPlayerInvokeCmd(player)) {
+      restrictedPlayers.ids.push(playerId);
+      sendMessage(`Gracz ${player.name} został pozbawiony możliwości wywoływania komend przez ${invokedBy.name}`);
+    } else {
+      let id = restrictedPlayers.ids.indexOf(playerId);
+      restrictedPlayers.ids.splice(id, 1);
+      sendMessage(`Gracz ${player.name} otrzymał możliwość wywoływania komend przez ${invokedBy.name}`);
+    }
+  } else {
+    sendMessage(`Gracz od ID ${playerId} nie został znaleziony`);
   }
 });
 
@@ -303,48 +380,39 @@ let randomTeams = new Cmd("random (\\d+)", {onlyAdmin: true}, function(invokedBy
   const bluePlayers = players.filter(player => player.team === 2);
 
   if (redPlayers.length > playersInTeam || bluePlayers.length > playersInTeam) {
-    return sendMessage(`Drużyny są liczniejsze niż ${playersInTeam} graczy, musisz przenieść graczy na ławkę`);
+    return sendMessage(`Drużyny są liczniejsze niż ${playersInTeam} graczy, musisz przenieść zawodników na ławkę`);
   }
 
-  let nextTeam = 1;
-  while (freePlayers) {
-    let randomId = getRandomInt(0, freePlayers.length - 1);
-    let player = freePlayers[randomId];
-    freePlayers.splice(randomId, 1);
+  function getFreePlayer() {
+      let randomId = getRandomInt(0, freePlayers.length - 1);
+      let player = freePlayers[randomId];
+      freePlayers.splice(randomId, 1);
+      return player;
+  }
 
-    if (nextTeam == 1 && redPlayers.length < playersInTeam) {
+  while (freePlayers && (redPlayers.length < playersInTeam || bluePlayers.length < playersInTeam)) {
+    
+    if (redPlayers.length < playersInTeam) {
+      let player = getFreePlayer();
       room.setPlayerTeam(player.id, 1);
       redPlayers.push(player);
-      nextTeam = 2;
       sendMessage(`Gracz ${player.name} został przydzielony do drużyny Red`);
-    } else if (nextTeam == 2 && bluePlayers.length < playersInTeam) {
+    }
+
+    if (bluePlayers.length < playersInTeam) {
+      let player = getFreePlayer();
       room.setPlayerTeam(player.id, 2);
       bluePlayers.push(player);
-      nextTeam = 1;
       sendMessage(`Gracz ${player.name} został przydzielony do drużyny Blue`);
-    } else if (redPlayers.length < playersInTeam) {
-      room.setPlayerTeam(player.id, 1);
-      redPlayers.push(player);
-      sendMessage(`Gracz ${player.name} został przydzielony do drużyny Red`);
-    } else if (bluePlayers.length < playersInTeam) {
-      room.setPlayerTeam(player.id, 2);
-      bluePlayers.push(player);           
-      sendMessage(`Gracz ${player.name} został przydzielony do drużyny Blue`);
-    } else {
-      return;
     }
   }
 });
 
 cmdManager = new CmdManager();
 cmdManager.addCmd(mutePlayerByName);
-cmdManager.addCmd(unmutePlayerByName);
 cmdManager.addCmd(mutePlayerById);
-cmdManager.addCmd(unmutePlayerById);
 cmdManager.addCmd(silentMutePlayerByName);
-cmdManager.addCmd(silentUnmutePlayerByName);
 cmdManager.addCmd(silentMutePlayerById);
-cmdManager.addCmd(silentUnmutePlayerById);
 cmdManager.addCmd(adminLogin);
 cmdManager.addCmd(adminLogout);
 cmdManager.addCmd(clearBans);
@@ -357,6 +425,14 @@ cmdManager.addCmd(listAdminCmds);
 cmdManager.addCmd(freeSlotCmd);
 cmdManager.addCmd(randomTeams);
 cmdManager.addCmd(listPlayers);
+cmdManager.addCmd(listTopPlayers);
+cmdManager.addCmd(goalInfoCmd);
+cmdManager.addCmd(giveSuperadmin);
+cmdManager.addCmd(stopCmdForPlayerByName);
+cmdManager.addCmd(stopCmdForPlayerById);
+cmdManager.addCmd(clearMutes);
+cmdManager.addCmd(clearCmdRestrictions);
+cmdManager.addCmd(muteAll);
 
 function parseCmd(player, message) {
   let cmdData = cmdManager.matchCmd(message);
@@ -378,8 +454,9 @@ function parseCmd(player, message) {
   return !message.startsWith("login");
 }
 
-function sendMessage(message) {
-  room.sendChat(messagePrefix + message);
+function sendMessage(message, initiator) {
+  if (!initiator || !isPlayerMuted(initiator))
+    room.sendChat(messagePrefix + message);
 }
 
 function isPlayerMuted(player) {
@@ -390,36 +467,45 @@ function isPlayerPrivileged(player) {
   return privilegedPlayers.includes(player.name);
 }
 
+function canPlayerInvokeCmd(player) {
+  return !restrictedPlayers.names.includes(player.name) && !restrictedPlayers.ids.includes(player.id);
+}
+
+function showMapCmds() {
+  sendMessage(`Wpisz ${cmdPrefix}m1 aby załadować mapę Power Classic`);
+  sendMessage(`Wpisz ${cmdPrefix}m2 aby załadować mapę Power Big`);
+}
+
 function updateAdmins() {
   const players = room.getPlayerList().filter(player => player.id != 0);
   if (players.length == 0) return;
   if (players.find(player => player.admin) != null) return;
   room.setPlayerAdmin(players[0].id, true);
-  sendMessage(`Gracz ${players[0].name} otrzymał uprawnienia Admina`);
-  sendMessage(`Wpisz ${cmdPrefix}m1 aby załadować mapę Power Classic`);
-  sendMessage(`Wpisz ${cmdPrefix}m2 aby załadować mapę Power Big`);
+  sendMessage(`Gracz ${players[0].name} został wytypowany na Admina`);
+  sendMessage(`Player ${players[0].name} has been arbitrary chosen as Admin`);
+  showMapCmds();
 }
 
 function freeSlot(invokedBy) {
   const players = room.getPlayerList().filter(player => player.id !== 0);
   if (players.length !== slots) return;
 
-  for (let id = players.length - 1; id >= 0; id--) {
-    if (players[id].team === 0 && !players[id].admin && !isPlayerPrivileged(players[id])) {
-      return room.kickPlayer(players[id].id, "Potrzebny slot");
+  for (let player of players) {
+    if (player.team === 0 && !player.admin && !isPlayerPrivileged(player)) {
+      return room.kickPlayer(player.id, "Potrzebny slot");
     }
   }
 
-  for (let id = players.length - 1; id >= 0; id--) {
-    if (!players[id].admin && !isPlayerPrivileged(players[id])) {
-      return room.kickPlayer(players[id].id, "Potrzebny slot");
+  for (let player of players) {
+    if (!player.admin && !isPlayerPrivileged(player)) {
+      return room.kickPlayer(player.id, "Potrzebny slot");
     }
   }
 
-  for (let id = players.length - 1; id >= 0; id--) {
-    if (!isPlayerPrivileged(players[id])) {
-      if (invokedBy !== undefined && invokedBy.id !== players[id].id && isPlayerPrivileged(invokedBy)) {
-        return room.kickPlayer(players[id].id, "Potrzebny slot");
+  for (let player of players) {
+    if (!isPlayerPrivileged(player)) {
+      if (invokedBy !== undefined && invokedBy.id !== player.id) {
+        return room.kickPlayer(player.id, "Potrzebny slot");
       }
     }
   }
@@ -431,3 +517,24 @@ function freeSlot(invokedBy) {
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function clearAllBans(initiator) {
+  room.clearBans();
+  sendMessage(`Bany zostały skasowane przez ${initiator}`);
+}
+
+function clearAllMutes(initiator) {
+  muted.ids = [];
+  muted.names = [];
+  sendMessage(`Wszyscy wyciszeni gracze zostali odciszeni przez ${initiator}`);
+}
+
+function clearAllRestrictedPlayers(initiator) {
+  restrictedPlayers.ids = [];
+  restrictedPlayers.names = [];
+  sendMessage(`Wszyscy gracze bez możliwości używania komend dostali ją z powrotem przez ${initiator}`);
+}
+
+setInterval(clearAllBans, 1000 * 60 * 60, "Arbitra");
+setInterval(clearAllMutes, 1000 * 60 * 60, "Arbitra");
+setInterval(clearAllRestrictedPlayers, 1000 * 60 * 60, "Arbitra");
