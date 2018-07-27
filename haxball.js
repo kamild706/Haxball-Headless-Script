@@ -1,65 +1,119 @@
-const hostPlayer = "Arbiter";
-const messagePrefix = ">>>>> ";
-const cmdPrefix = "!";
-const privilegedPlayers = [];
-const slots = 9;
-const goals = {};
-const muted = {
-  names: [],
-  ids: [],
-};
-const restrictedPlayers = {
-  names: [],
-  ids: [],
-};
-const maps = {
-  powerClassic: `{"name":"Joe's power classic night edition","width":420,"height":200,"spawnDistance":170,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":370,"y":-170,"trait":"ballAreaVertical"},{"x":370,"y":-64,"trait":"ballAreaVertical"},{"x":370,"y":64,"trait":"ballAreaVertical"},{"x":370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":64,"trait":"ballAreaVertical"},{"x":-370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":-170,"trait":"ballAreaVertical"},{"x":-370,"y":-64,"trait":"ballAreaVertical"},{"x":-400,"y":-54,"trait":"goalNet"},{"x":-400,"y":54,"trait":"goalNet"},{"x":400,"y":-54,"trait":"goalNet"},{"x":400,"y":54,"cMask":["ball"]},{"x":371,"y":-170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":-64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":-371,"y":-170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-171,"cMask":["ball"]},{"x":371,"y":-171,"cMask":["ball"]},{"x":-371,"y":171,"cMask":["ball"]},{"x":371,"y":171,"cMask":["ball"]},{"x":0,"y":75,"trait":"kickOffBarrier"},{"x":0,"y":170,"trait":"kickOffBarrier"},{"x":0,"y":-170,"trait":"kickOffBarrier"},{"x":0,"y":-75,"trait":"kickOffBarrier"},{"x":0,"y":200,"trait":"kickOffBarrier"},{"x":0,"y":-200,"trait":"kickOffBarrier"},{"x":-383,"y":-170,"trait":"bugFix"},{"x":-383,"y":-64,"trait":"bugFix"},{"x":-383,"y":64,"trait":"bugFix"},{"x":-383,"y":170,"trait":"bugFix"},{"x":383,"y":-170,"trait":"bugFix"},{"x":383,"y":-64,"trait":"bugFix"},{"x":383,"y":64,"trait":"bugFix"},{"x":383,"y":170,"trait":"bugFix"}],"segments":[{"v0":0,"v1":1,"trait":"ballAreaVertical"},{"v0":2,"v1":3,"trait":"ballAreaVertical"},{"v0":4,"v1":5,"trait":"ballAreaVertical"},{"v0":6,"v1":7,"trait":"ballAreaVertical"},{"v0":12,"v1":13,"bCoef":0,"trait":"ballAreaVertical"},{"v0":14,"v1":15,"bCoef":0,"trait":"ballAreaVertical"},{"v0":16,"v1":17,"bCoef":0,"trait":"ballAreaVertical"},{"v0":18,"v1":19,"bCoef":0,"trait":"ballAreaVertical"},{"v0":24,"v1":25,"trait":"kickOffBarrier"},{"v0":26,"v1":27,"trait":"kickOffBarrier"},{"v0":6,"v1":0,"trait":"ballAreaHorizontal"},{"v0":5,"v1":3,"trait":"ballAreaHorizontal"},{"v0":20,"v1":21,"trait":"ballAreaHorizontal"},{"v0":22,"v1":23,"trait":"ballAreaHorizontal"},{"v0":1,"v1":2,"trait":"goalLine"},{"v0":7,"v1":4,"trait":"goalLine"},{"v0":13,"v1":15,"trait":"goalLine"},{"v0":17,"v1":18,"trait":"goalLine"},{"v0":7,"v1":8,"trait":"goalNet"},{"v0":8,"v1":9,"trait":"goalNet"},{"v0":9,"v1":4,"trait":"goalNet"},{"v0":1,"v1":10,"trait":"goalNet"},{"v0":10,"v1":11,"trait":"goalNet"},{"v0":11,"v1":2,"trait":"goalNet"},{"v0":27,"v1":24,"color":"ffffff","trait":"line"},{"v0":27,"v1":24,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":27,"v1":24,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":25,"v1":28,"vis":false,"trait":"kickOffBarrier"},{"v0":26,"v1":29,"vis":false,"trait":"kickOffBarrier"},{"v0":30,"v1":31,"trait":"bugFix"},{"v0":32,"v1":33,"trait":"bugFix"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"}],"goals":[{"p0":[-383,-64],"p1":[-383,64],"team":"red"},{"p0":[383,-64],"p1":[383,64],"team":"blue"}],"discs":[{"pos":[-370,-64],"trait":"goalPost"},{"pos":[-370,64],"trait":"goalPost"},{"pos":[370,-64],"trait":"goalPost"},{"pos":[370,64],"trait":"goalPost"}],"planes":[{"normal":[0,1],"dist":-200},{"normal":[0,-1],"dist":-200},{"normal":[-1,0],"dist":-420},{"normal":[1,0],"dist":-420},{"normal":[0,1],"dist":-170,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-170,"bCoef":1,"cMask":["ball"]}],"traits":{"ballAreaVertical":{"vis":true,"color":"C7C730","bCoef":1,"cMask":["ball"]},"ballAreaHorizontal":{"vis":true,"color":"363333","bCoef":0,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"goalLine":{"vis":true,"cMask":["wall"],"bCoef":0,"color":"ffffff"},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`,
-  powerBig: `{"name":"Joe's power big night edition","width":600,"height":270,"spawnDistance":350,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":-550,"y":240,"cMask":["ball"]},{"x":550,"y":240,"cMask":["ball"]},{"x":-550,"y":-240,"cMask":["ball"],"trait":"ballArea"},{"x":550,"y":-240,"cMask":["ball"]},{"x":-550,"y":-80,"cMask":["ball"],"trait":"ballArea","color":"363333"},{"x":-550,"y":80,"cMask":["ball"]},{"x":550,"y":-80,"cMask":["ball"],"pos":[550,-80]},{"x":550,"y":80,"cMask":["ball"]},{"x":0,"y":-240,"trait":"kickOffBarrier"},{"x":0,"y":-80,"trait":"kickOffBarrier"},{"x":0,"y":80,"trait":"kickOffBarrier"},{"x":0,"y":240,"trait":"kickOffBarrier"},{"x":0,"y":-270,"trait":"kickOffBarrier"},{"x":0,"y":270,"trait":"kickOffBarrier"},{"x":-580,"y":-70,"cMask":["ball"]},{"x":-580,"y":70,"cMask":["ball"]},{"x":580,"y":-70,"cMask":["ball"]},{"x":580,"y":70,"cMask":["ball"]},{"x":-551,"y":-241,"trait":"line"},{"x":551,"y":-241,"trait":"line"},{"x":-551,"y":241,"cMask":["ball"]},{"x":551,"y":241,"cMask":["ball"]},{"x":551,"y":-240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":551,"y":240,"cMask":["ball"]},{"x":-551,"y":-240,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":-80,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":80,"cMask":["ball"]},{"x":-551,"y":240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":-551,"y":-80,"cMask":["ball"]},{"x":-551,"y":80,"cMask":["ball"]},{"x":-563,"y":-240,"trait":"bugFix"},{"x":-563,"y":-80,"trait":"bugFix"},{"x":-563,"y":80,"trait":"bugFix"},{"x":-563,"y":240,"trait":"bugFix"},{"x":563,"y":80,"trait":"bugFix"},{"x":563,"y":240,"trait":"bugFix"},{"x":563,"y":-240,"trait":"bugFix"},{"x":563,"y":-80,"trait":"bugFix"}],"segments":[{"v0":2,"v1":4,"color":"C7C730","trait":"ballArea"},{"v0":0,"v1":5,"color":"C7C730","trait":"ballArea"},{"v0":3,"v1":6,"color":"C7C730","trait":"ballArea"},{"v0":1,"v1":7,"color":"C7C730","trait":"ballArea"},{"v0":22,"v1":23,"color":"C7C730","trait":"line"},{"v0":24,"v1":25,"color":"C7C730","trait":"line"},{"v0":26,"v1":27,"color":"C7C730","trait":"line"},{"v0":28,"v1":29,"color":"C7C730","trait":"line"},{"v0":6,"v1":7,"color":"ffffff","trait":"line"},{"v0":4,"v1":5,"color":"ffffff","trait":"line"},{"v0":8,"v1":9,"trait":"kickOffBarrier"},{"v0":10,"v1":11,"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"color":"ffffff","trait":"line"},{"v0":8,"v1":12,"vis":false,"trait":"kickOffBarrier"},{"v0":11,"v1":13,"vis":false,"trait":"kickOffBarrier"},{"v0":0,"v1":1,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":2,"v1":3,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":18,"v1":19,"color":"363333","trait":"line"},{"v0":20,"v1":21,"color":"363333","trait":"line"},{"v0":4,"v1":14,"trait":"goalNet"},{"v0":5,"v1":15,"trait":"goalNet"},{"v0":14,"v1":15,"trait":"goalNet"},{"v0":6,"v1":16,"trait":"goalNet"},{"v0":16,"v1":17,"trait":"goalNet"},{"v0":17,"v1":7,"trait":"goalNet"},{"v0":30,"v1":31,"color":"ffffff","trait":"line"},{"v0":32,"v1":33,"color":"ffffff","trait":"line"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"},{"v0":38,"v1":39,"trait":"bugFix"},{"v0":40,"v1":41,"trait":"bugFix"}],"goals":[{"p0":[-563,-80],"p1":[-563,80],"team":"red"},{"p0":[563,-80],"p1":[563,80],"team":"blue"}],"discs":[{"pos":[-550,-80],"trait":"goalPost"},{"pos":[-550,80],"trait":"goalPost"},{"pos":[550,-80],"trait":"goalPost"},{"pos":[550,80],"trait":"goalPost"}],"planes":[{"normal":[-1,0],"dist":-600},{"normal":[1,0],"dist":-600},{"normal":[0,1],"dist":-270},{"normal":[0,-1],"dist":-270},{"normal":[0,1],"dist":-240,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-240,"bCoef":1,"cMask":["ball"]}],"traits":{"ballArea":{"vis":true,"bCoef":1,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`,
-};
-let ballKickedBy = null;
-let cmdManager;
-let showGoalInfo = true;
-
-const room = HBInit({
-  roomName: "POWER GAME v2 v3",
-  maxPlayers: slots,
-  playerName: hostPlayer,
+const game = {
+  roomName: "POWER GAME 2v2 3v3",
+  maxPlayers: 12,
+  playerName: "Arbiter",
   public : true,
   geo: {
     code: "PL",
-    lat: 53,
-    lon: 23
+    lat: 52,
+    lon: 19
   }
-});
+};
+
+const config = {
+  showGoalInfo: true,
+  chatEnabled: true,
+  muteNewPlayers: false,
+  adminPassword: "password"
+};
+
+const prefixes = {
+  message: ">>>>> ",
+  cmd: "!"
+};
+
+let superAdmins = [];
+let mutedPlayers = [];
+let noCmdPlayers = [];
+
+const maps = {
+  powerClassic: `{"name":"Joe's power classic night edition","width":420,"height":200,"spawnDistance":170,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":370,"y":-170,"trait":"ballAreaVertical"},{"x":370,"y":-64,"trait":"ballAreaVertical"},{"x":370,"y":64,"trait":"ballAreaVertical"},{"x":370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":64,"trait":"ballAreaVertical"},{"x":-370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":-170,"trait":"ballAreaVertical"},{"x":-370,"y":-64,"trait":"ballAreaVertical"},{"x":-400,"y":-54,"trait":"goalNet"},{"x":-400,"y":54,"trait":"goalNet"},{"x":400,"y":-54,"trait":"goalNet"},{"x":400,"y":54,"cMask":["ball"]},{"x":371,"y":-170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":-64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":-371,"y":-170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-171,"cMask":["ball"]},{"x":371,"y":-171,"cMask":["ball"]},{"x":-371,"y":171,"cMask":["ball"]},{"x":371,"y":171,"cMask":["ball"]},{"x":0,"y":75,"trait":"kickOffBarrier"},{"x":0,"y":170,"trait":"kickOffBarrier"},{"x":0,"y":-170,"trait":"kickOffBarrier"},{"x":0,"y":-75,"trait":"kickOffBarrier"},{"x":0,"y":200,"trait":"kickOffBarrier"},{"x":0,"y":-200,"trait":"kickOffBarrier"},{"x":-383,"y":-170,"trait":"bugFix"},{"x":-383,"y":-64,"trait":"bugFix"},{"x":-383,"y":64,"trait":"bugFix"},{"x":-383,"y":170,"trait":"bugFix"},{"x":383,"y":-170,"trait":"bugFix"},{"x":383,"y":-64,"trait":"bugFix"},{"x":383,"y":64,"trait":"bugFix"},{"x":383,"y":170,"trait":"bugFix"}],"segments":[{"v0":0,"v1":1,"trait":"ballAreaVertical"},{"v0":2,"v1":3,"trait":"ballAreaVertical"},{"v0":4,"v1":5,"trait":"ballAreaVertical"},{"v0":6,"v1":7,"trait":"ballAreaVertical"},{"v0":12,"v1":13,"bCoef":0,"trait":"ballAreaVertical"},{"v0":14,"v1":15,"bCoef":0,"trait":"ballAreaVertical"},{"v0":16,"v1":17,"bCoef":0,"trait":"ballAreaVertical"},{"v0":18,"v1":19,"bCoef":0,"trait":"ballAreaVertical"},{"v0":24,"v1":25,"trait":"kickOffBarrier"},{"v0":26,"v1":27,"trait":"kickOffBarrier"},{"v0":6,"v1":0,"trait":"ballAreaHorizontal"},{"v0":5,"v1":3,"trait":"ballAreaHorizontal"},{"v0":20,"v1":21,"trait":"ballAreaHorizontal"},{"v0":22,"v1":23,"trait":"ballAreaHorizontal"},{"v0":1,"v1":2,"trait":"goalLine"},{"v0":7,"v1":4,"trait":"goalLine"},{"v0":13,"v1":15,"trait":"goalLine"},{"v0":17,"v1":18,"trait":"goalLine"},{"v0":7,"v1":8,"trait":"goalNet"},{"v0":8,"v1":9,"trait":"goalNet"},{"v0":9,"v1":4,"trait":"goalNet"},{"v0":1,"v1":10,"trait":"goalNet"},{"v0":10,"v1":11,"trait":"goalNet"},{"v0":11,"v1":2,"trait":"goalNet"},{"v0":27,"v1":24,"color":"ffffff","trait":"line"},{"v0":27,"v1":24,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":27,"v1":24,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":25,"v1":28,"vis":false,"trait":"kickOffBarrier"},{"v0":26,"v1":29,"vis":false,"trait":"kickOffBarrier"},{"v0":30,"v1":31,"trait":"bugFix"},{"v0":32,"v1":33,"trait":"bugFix"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"}],"goals":[{"p0":[-382,-64],"p1":[-382,64],"team":"red"},{"p0":[382,-64],"p1":[382,64],"team":"blue"}],"discs":[{"pos":[-370,-64],"trait":"goalPost"},{"pos":[-370,64],"trait":"goalPost"},{"pos":[370,-64],"trait":"goalPost"},{"pos":[370,64],"trait":"goalPost"}],"planes":[{"normal":[0,1],"dist":-200},{"normal":[0,-1],"dist":-200},{"normal":[-1,0],"dist":-420},{"normal":[1,0],"dist":-420},{"normal":[0,1],"dist":-170,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-170,"bCoef":1,"cMask":["ball"]}],"traits":{"ballAreaVertical":{"vis":true,"color":"C7C730","bCoef":1,"cMask":["ball"]},"ballAreaHorizontal":{"vis":true,"color":"363333","bCoef":0,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"goalLine":{"vis":true,"cMask":["wall"],"bCoef":0,"color":"ffffff"},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`,
+  powerBig: `{"name":"Joe's power big night edition","width":600,"height":270,"spawnDistance":350,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":-550,"y":240,"cMask":["ball"]},{"x":550,"y":240,"cMask":["ball"]},{"x":-550,"y":-240,"cMask":["ball"],"trait":"ballArea"},{"x":550,"y":-240,"cMask":["ball"]},{"x":-550,"y":-80,"cMask":["ball"],"trait":"ballArea","color":"363333"},{"x":-550,"y":80,"cMask":["ball"]},{"x":550,"y":-80,"cMask":["ball"],"pos":[550,-80]},{"x":550,"y":80,"cMask":["ball"]},{"x":0,"y":-240,"trait":"kickOffBarrier"},{"x":0,"y":-80,"trait":"kickOffBarrier"},{"x":0,"y":80,"trait":"kickOffBarrier"},{"x":0,"y":240,"trait":"kickOffBarrier"},{"x":0,"y":-270,"trait":"kickOffBarrier"},{"x":0,"y":270,"trait":"kickOffBarrier"},{"x":-580,"y":-70,"cMask":["ball"]},{"x":-580,"y":70,"cMask":["ball"]},{"x":580,"y":-70,"cMask":["ball"]},{"x":580,"y":70,"cMask":["ball"]},{"x":-551,"y":-241,"trait":"line"},{"x":551,"y":-241,"trait":"line"},{"x":-551,"y":241,"cMask":["ball"]},{"x":551,"y":241,"cMask":["ball"]},{"x":551,"y":-240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":551,"y":240,"cMask":["ball"]},{"x":-551,"y":-240,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":-80,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":80,"cMask":["ball"]},{"x":-551,"y":240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":-551,"y":-80,"cMask":["ball"]},{"x":-551,"y":80,"cMask":["ball"]},{"x":-563,"y":-240,"trait":"bugFix"},{"x":-563,"y":-80,"trait":"bugFix"},{"x":-563,"y":80,"trait":"bugFix"},{"x":-563,"y":240,"trait":"bugFix"},{"x":563,"y":80,"trait":"bugFix"},{"x":563,"y":240,"trait":"bugFix"},{"x":563,"y":-240,"trait":"bugFix"},{"x":563,"y":-80,"trait":"bugFix"}],"segments":[{"v0":2,"v1":4,"color":"C7C730","trait":"ballArea"},{"v0":0,"v1":5,"color":"C7C730","trait":"ballArea"},{"v0":3,"v1":6,"color":"C7C730","trait":"ballArea"},{"v0":1,"v1":7,"color":"C7C730","trait":"ballArea"},{"v0":22,"v1":23,"color":"C7C730","trait":"line"},{"v0":24,"v1":25,"color":"C7C730","trait":"line"},{"v0":26,"v1":27,"color":"C7C730","trait":"line"},{"v0":28,"v1":29,"color":"C7C730","trait":"line"},{"v0":6,"v1":7,"color":"ffffff","trait":"line"},{"v0":4,"v1":5,"color":"ffffff","trait":"line"},{"v0":8,"v1":9,"trait":"kickOffBarrier"},{"v0":10,"v1":11,"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"color":"ffffff","trait":"line"},{"v0":8,"v1":12,"vis":false,"trait":"kickOffBarrier"},{"v0":11,"v1":13,"vis":false,"trait":"kickOffBarrier"},{"v0":0,"v1":1,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":2,"v1":3,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":18,"v1":19,"color":"363333","trait":"line"},{"v0":20,"v1":21,"color":"363333","trait":"line"},{"v0":4,"v1":14,"trait":"goalNet"},{"v0":5,"v1":15,"trait":"goalNet"},{"v0":14,"v1":15,"trait":"goalNet"},{"v0":6,"v1":16,"trait":"goalNet"},{"v0":16,"v1":17,"trait":"goalNet"},{"v0":17,"v1":7,"trait":"goalNet"},{"v0":30,"v1":31,"color":"ffffff","trait":"line"},{"v0":32,"v1":33,"color":"ffffff","trait":"line"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"},{"v0":38,"v1":39,"trait":"bugFix"},{"v0":40,"v1":41,"trait":"bugFix"}],"goals":[{"p0":[-562,-80],"p1":[-562,80],"team":"red"},{"p0":[562,-80],"p1":[562,80],"team":"blue"}],"discs":[{"pos":[-550,-80],"trait":"goalPost"},{"pos":[-550,80],"trait":"goalPost"},{"pos":[550,-80],"trait":"goalPost"},{"pos":[550,80],"trait":"goalPost"}],"planes":[{"normal":[-1,0],"dist":-600},{"normal":[1,0],"dist":-600},{"normal":[0,1],"dist":-270},{"normal":[0,-1],"dist":-270},{"normal":[0,1],"dist":-240,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-240,"bCoef":1,"cMask":["ball"]}],"traits":{"ballArea":{"vis":true,"bCoef":1,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`
+};
+
+let goal = {
+  kick: {
+    player: null,
+    time: null,
+  },
+  touch: {
+    player: null,
+    time: null
+  }
+};
+
+let assistingPlayer = null;
+
+let goals = {};
+let assists = {};
+let cmdManager;
+
+const room = HBInit(game);
+
 
 room.onPlayerBallKick = player => {
-  ballKickedBy = player.name;
+  updateAssistingPlayer(player);
+
+  let time = Date.now();
+  let kick = {time, player};
+  goal.kick = kick;
 };
 
 room.onTeamGoal = team => {
-  if (ballKickedBy) {
-    if (showGoalInfo)
-      sendMessage(`Strzał oddał gracz ${ballKickedBy}`);
-    
-    let score = goals[ballKickedBy] | 0;
-    goals[ballKickedBy] = score + 1;
-    ballKickedBy = null;
+  let scorer;
+
+  if (goal.kick && goal.touch) {
+    if (goal.kick.time > goal.touch.time) {
+      scorer = goal.kick.player;
+    } else {
+      scorer = goal.touch.player;
+    }
+  } else if (goal.kick) {
+    scorer = goal.kick.player;
+  } else if (goal.touch) {
+    scorer = goal.touch.player;
   }
+
+  if (scorer) {
+    let ownGoal = scorer.team !== team;
+    let assistValid = assistingPlayer && !ownGoal && assistingPlayer.team === team && assistingPlayer.id !== scorer.id;
+
+    if (config.showGoalInfo) {
+      let message = `Gola ${ownGoal ? "samobójczego" : ""} zdobył gracz ${scorer.name}`;
+      if (assistValid) {
+        message += ` (${assistingPlayer.name})`;
+      }
+      sendMessage(message);
+    }
+
+    if (!ownGoal) {
+      let score = goals[scorer.name] || 0;
+      goals[scorer.name] = score + 1;
+    }
+
+    if (assistValid) {
+      let score = assists[assistingPlayer.name] || 0;
+      assists[assistingPlayer.name] = score + 1;
+    }
+  }
+
+  goal.kick = null;
+  goal.touch = null;
 };
 
 room.onPlayerChat = (player, message) => {
-  if (message.startsWith(cmdPrefix)) {
+  if (message.startsWith(prefixes.cmd)) {
     if (!canPlayerInvokeCmd(player)) return false;
 
-    let showMessage =  parseCmd(player, message.substring(1));
-    return showMessage && !isPlayerMuted(player);
+    let showMessage = parseCmd(player, message.substring(1));
+    return showMessage && (!isPlayerMuted(player) && config.chatEnabled || isSuperAdmin(player));
   }
 
-  return !isPlayerMuted(player);
+  return !isPlayerMuted(player) && config.chatEnabled || isSuperAdmin(player);
 };
 
 room.onPlayerKicked = (kickedPlayer, reason, ban, byPlayer) => {
-  if (isPlayerPrivileged(kickedPlayer)) {
+  if (isSuperAdmin(kickedPlayer)) {
     if (ban)
       room.clearBans();
 
@@ -69,8 +123,8 @@ room.onPlayerKicked = (kickedPlayer, reason, ban, byPlayer) => {
 };
 
 room.onPlayerAdminChange = (changedPlayer, byPlayer) => {
-  if (!changedPlayer.admin && isPlayerPrivileged(changedPlayer)) {
-    if (byPlayer !== null && byPlayer.name !== hostPlayer) {
+  if (!changedPlayer.admin && isSuperAdmin(changedPlayer)) {
+    if (byPlayer !== null && byPlayer.name !== game.playerName) {
       room.setPlayerAdmin(changedPlayer.id, true);
       room.setPlayerAdmin(byPlayer.id, false);
 
@@ -80,8 +134,8 @@ room.onPlayerAdminChange = (changedPlayer, byPlayer) => {
 };
 
 room.onStadiumChange = (newStadiumName, byPlayer) => {
-  if (!/power/i.exec(newStadiumName) && !isPlayerPrivileged(byPlayer)) {
-    sendMessage("Tylko Superadministrator może załadować mapę inną niż Power");
+  if (!/power/i.exec(newStadiumName) && !isSuperAdmin(byPlayer)) {
+    sendMessage("Tylko mapy z serii Power");
     showMapCmds();
     room.setCustomStadium(maps.powerClassic);
   }
@@ -89,10 +143,46 @@ room.onStadiumChange = (newStadiumName, byPlayer) => {
 
 room.onPlayerJoin = player => {
   updateAdmins();
+  if (config.muteNewPlayers) {
+    mutePlayer(player);
+  }
 };
 
 room.onPlayerLeave = player => {
   updateAdmins();
+};
+
+room.onPlayerTeamChange = player => {
+  if (player.id === 0) {
+    room.setPlayerTeam(0, 0);
+  }
+};
+
+room.onGameTick = () => {
+  let players = room.getPlayerList();
+  let ballPosition = room.getBallPosition();
+  let ballRadius = 10;
+  let playerRadius = 15;
+  let triggerDistance = ballRadius + playerRadius + 0.01;
+
+  for (let player of players) {
+    if (!player.position) continue;
+
+    let distanceToBall = pointDistance(player.position, ballPosition);
+    if (distanceToBall < triggerDistance) {
+      updateAssistingPlayer(player);
+
+      let time = Date.now();
+      let touch = {time, player};
+      goal.touch = touch;
+    }
+  }
+};
+
+room.onGameStart = () => {
+  goal.kick = null;
+  goal.touch = null;
+  assistingPlayer = null;
 };
 
 class CmdManager {
@@ -100,52 +190,58 @@ class CmdManager {
     this.cmds = [];
   }
 
-  addCmd(cmd) {
+  add(cmd) {
     this.cmds.push(cmd);
   }
 
-  removeCmd(cmd) {
+  remove(cmd) {
     let index = this.cmds.indexOf(cmd);
     if (index !== -1) {
       this.cmds.splice(index, 1);
     }
   }
 
-  matchCmd(message) {
+  findCmd(message) {
     for (let cmd of this.cmds) {
-      let match = cmd.regex.exec(message);
-      if (match) {
-        let args = this.extractArguments(match);
-        return {args, cmd}
+      let regex = cmd.getBaseRegex();
+      if (regex.exec(message)) {
+        return cmd;
       }
     }
 
     return null;
   }
 
-  extractArguments(match) {
-    let args = [];
-    for (let i = 1; match[i] !== undefined; i++) {
-      args.push(match[i]);
+  extractArguments(cmd, message) {
+    let regex = cmd.getFullRegex();
+    let match = regex.exec(message);
+    if (match) {
+      let args = [];
+      for (let i = 1; match[i] !== undefined; i++) {
+        args.push(match[i]);
+      }
+      return {args};
     }
 
-    return args;
+    return {error: cmd.getHelpText()};
   }
 
-  listCmds(type) {
-    if (type === "admin")
-      type = true;
-    else if (type === "regular")
-      type = null;
-    else
-      return [];
-
+  listAdminCmds() {
     let list = [];
     for (let cmd of this.cmds) {
-      if (cmd.opts.onlyAdmin == type) {
-        let stringRegex = cmd.regex.toString();
-        let match = /(\w+)/.exec(stringRegex);
-        list.push(cmdPrefix + match[1]);
+      if (cmd.onlyAdmin) {
+        list.push(prefixes.cmd + cmd.cmd);
+      }
+    }
+
+    return list;
+  }
+
+  listPlayerCmds() {
+    let list = [];
+    for (let cmd of this.cmds) {
+      if (!cmd.onlyAdmin && !cmd.onlySuperAdmin) {
+        list.push(prefixes.cmd + cmd.cmd);
       }
     }
 
@@ -154,220 +250,366 @@ class CmdManager {
 }
 
 class Cmd {
-  constructor(cmdText, opts, action) {
-    if (arguments.length === 2) {
-      action = opts;
-      this.opts = {};
-    } else {
-      this.opts = opts;
+  constructor(config, func) {
+    this.cmd = config.cmd;
+    this.params = config.params || null;
+    this.paramsOptional = config.paramsOptional || false;
+    this.showInChat = config.showInChat || false;
+    this.onlyAdmin = config.onlyAdmin || false;
+    this.onlySuperAdmin = config.onlySuperAdmin || false;
+    this.helpText = config.helpText || null;
+    this.func = func;
+  }
+
+  canPlayerExecute(player) {
+    if (this.onlySuperAdmin && !isSuperAdmin(player))
+      return false;
+    if (this.onlyAdmin && !player.admin)
+      return false;
+    return true;
+  }
+
+  execute(args) {
+    return this.func.apply(null, args);
+  }
+
+  getHelpText() {
+    let params = "";
+    for (let param in this.params) {
+      params += ` ${param}`;
+    }
+    let message = `Użyj ${prefixes.cmd}${this.cmd}${params}`;
+    if (this.helpText) {
+      message += `  (${this.helpText})`;
+    }
+    
+    return message;
+  }
+
+  getBaseRegex() {
+    return new RegExp(`^${this.cmd}\\b`);
+  }
+
+  getFullRegex() {
+    let list = "";
+    if (this.paramsOptional) {
+      list = "(?:";
     }
 
-    this.regex = new RegExp(`^${cmdText}$`);
-    this.action = action;
+    for (let param in this.params) {
+      list += ` ${this.params[param]}`;
+    }
+
+    if (this.paramsOptional) {
+      list += ")?";
+    }
+
+    return new RegExp(`^${this.cmd}${list}$`);
   }
 }
 
-let mutePlayerByName = new Cmd("mute (.+)", {onlyAdmin: true}, function(invokedBy, nameToMute) {
-  let player = room.getPlayerList().filter(player => player.name === nameToMute)[0];
-  if (player) {
-    if (isPlayerMuted(player)) {
-      let index = muted.names.indexOf(nameToMute);
-      muted.names.splice(index, 1);
-      sendMessage(`${nameToMute} został odciszony przez ${invokedBy.name}`);
-    } else {
-      muted.names.push(nameToMute);
-      sendMessage(`${nameToMute} został wyciszony przez ${invokedBy.name}`);
-    }
-  } else {
+let mutePlayerByName = new Cmd({cmd: "mute", params: {name: "(.+)"}, onlyAdmin: true}, (invokedBy, nameToMute) => {
+  let players = room.getPlayerList().filter(player => player.name.includes(nameToMute));
+  
+  if (players.length === 1) {
+    process(players);
+  } else if (!players.length) {
     sendMessage(`${nameToMute} nie został odnaleziony`);
+  } else {
+    players = players.filter(player => player.name === nameToMute);
+    if (players.length === 1) {
+      process(players);
+    } else {
+      sendMessage(`Znaleziono wielu graczy pasujących do wzorca ${nameToMute}`);
+    }
+  }
+
+  function process(players) {
+    let player = players[0];
+    if (isPlayerMuted(player)) {
+      unmutePlayer(player);
+      sendMessage(`${player.name} został odciszony przez ${invokedBy.name}`);
+    } else {
+      mutePlayer(player);
+      sendMessage(`${player.name} został wyciszony przez ${invokedBy.name}`);
+    }
   }
 });
 
-let mutePlayerById = new Cmd("muteid (\\d+)", {onlyAdmin: true}, function(invokedBy, idToMute) {
-  idToMute = Number(idToMute);
-  let index = muted.ids.indexOf(idToMute);
-  let player = room.getPlayerList().filter(player => player.id === idToMute)[0];
-  if (index !== -1) {
-    muted.ids.splice(index, 1);
-    if (player) {
+let mutePlayerById = new Cmd({cmd: "muteid", params: {id: "(\\d+)"}, onlyAdmin: true}, (invokedBy, idToMute) => {
+  let player = room.getPlayerList().filter(player => player.id === Number(idToMute))[0];
+  
+  if (player) {
+    if (isPlayerMuted(player)) {
+      unmutePlayer(player);
       sendMessage(`${player.name} został odciszony przez ${invokedBy.name}`);
     } else {
-      sendMessage(`Id ${idToMute} zostało odciszone przez ${invokedBy.name}`);
+      mutePlayer(player);
+      sendMessage(`${player.name} został wyciszony przez ${invokedBy.name}`);
     }
-  } else if (player) {
-    muted.ids.push(idToMute);
-    sendMessage(`${player.name} został wyciszony przez ${invokedBy.name}`);
   } else {
     sendMessage(`Gracz o id ${idToMute} nie został znaleziony`);
   }
 });
 
-let silentMutePlayerByName = new Cmd("smute (.+)", {onlyAdmin: true}, function(invokedBy, nameToMute) {
-  let player = room.getPlayerList().filter(player => player.name === nameToMute)[0];
-  if (player && !isPlayerMuted(player)) {
-    muted.names.push(nameToMute);
-  } else {
-    let index = muted.names.indexOf(nameToMute);
-    if (index !== -1) {
-      muted.names.splice(index, 1);
+let muteNewPlayers = new Cmd({cmd: "mutenew", onlyAdmin: true}, (invokedBy) => {
+  config.muteNewPlayers = !config.muteNewPlayers;
+  if (config.muteNewPlayers) {
+    sendMessage(`Chat został wyłączony dla nowych graczy przez ${invokedBy.name}`);
+  }
+  else {
+    sendMessage(`Chat został włączony dla nowych graczy przez ${invokedBy.name}`);
+    clearAllMutes();
+  }
+});
+
+let silentMutePlayerByName = new Cmd({cmd: "smute", params: {name: "(.+)"}, onlyAdmin: true}, (invokedBy, nameToMute) => {
+  let players = room.getPlayerList().filter(player => player.name.includes(nameToMute));
+  
+  if (players.length === 1) {
+    process(players);
+  } else if (players.length > 1) {
+    players = players.filter(player => player.name === nameToMute);
+    if (players.length === 1) {
+      process(players);
+    }
+  }
+
+  function process(players) {
+    let player = players[0];
+    if (isPlayerMuted(player)) {
+      unmutePlayer(player);
+    } else {
+      mutePlayer(player);
     }
   }
 });
 
-let silentMutePlayerById = new Cmd("smuteid (\\d+)", {onlyAdmin: true}, function(invokedBy, idToMute) {
-  idToMute = Number(idToMute);
-  let player = room.getPlayerList().filter(player => player.id === idToMute)[0];
-  if (player && !isPlayerMuted(player)) {
-    muted.ids.push(idToMute);
-  } else {
-    let index = muted.ids.indexOf(idToMute);
-    if (index !== -1) {
-      muted.ids.splice(index, 1);
+let silentMutePlayerById = new Cmd({cmd: "smuteid", params: {id: "(\\d+)"}, onlyAdmin: true}, (invokedBy, idToMute) => {
+  let player = room.getPlayerList().filter(player => player.id === Number(idToMute))[0];
+  
+  if (player) {
+    if (isPlayerMuted(player)) {
+      unmutePlayer(player);
+    } else {
+      mutePlayer(player);
     }
   }
 });
 
-let adminLogin = new Cmd("login password", function(invokedBy) {
+let adminLogin = new Cmd({cmd: `login ${config.adminPassword}`}, (invokedBy) => {
   if (!invokedBy.admin) {
     room.setPlayerAdmin(invokedBy.id, true);
-    privilegedPlayers.push(invokedBy.name);
+    setSuperAdmin(invokedBy);
   }
 });
 
-let adminLogout = new Cmd("logout", {onlyAdmin: true}, function(invokedBy) {
+let adminLogout = new Cmd({cmd: "logout", onlyAdmin: true}, (invokedBy) => {
   room.setPlayerAdmin(invokedBy.id, false);
 });
 
-let clearBans = new Cmd("clearbans", {onlyAdmin: true}, function(invokedBy) {
+let clearBans = new Cmd({cmd: "clearbans", onlyAdmin: true}, (invokedBy) => {
   clearAllBans(invokedBy.name);
 });
 
-let clearMutes = new Cmd("clearmutes", {onlyAdmin: true}, function(invokedBy) {
+let clearMutes = new Cmd({cmd: "clearmutes", onlyAdmin: true}, (invokedBy) => {
   clearAllMutes(invokedBy.name);
 });
 
-let muteAll = new Cmd("muteall", {onlyAdmin: true}, function(invokedBy) {
+let toggleChat = new Cmd({cmd: "togglechat", onlyAdmin: true}, (invokedBy) => {
+  if (config.chatEnabled) {
+    sendMessage(`Chat został wyłączony przez ${invokedBy.name}`);
+    config.chatEnabled = false;
+  } else {
+    config.chatEnabled = true;
+    sendMessage(`Chat został włączony przez ${invokedBy.name}`);
+  }
+});
+
+let muteAll = new Cmd({cmd: "muteall", onlyAdmin: true}, (invokedBy) => {
   const players = room.getPlayerList().filter(player => player.id !== 0);
   for (let player of players) {
     if (player.name !== invokedBy.name)
-      muted.names.push(player.name);
+      mutePlayer(player);
   }
   sendMessage(`Wszyscy gracze zostali wyciszeni przez ${invokedBy.name}`);
 });
 
-let clearCmdRestrictions = new Cmd("clearcmdbans", {onlyAdmin: true}, function(invokedBy) {
-  clearAllRestrictedPlayers(invokedBy.name);
+let clearNoCmdPlayers = new Cmd({cmd: "clearnocmd", onlyAdmin: true}, (invokedBy) => {
+  clearAllNoCmdPlayers(invokedBy.name);
 });
 
-let loadClassicMap = new Cmd("m1", {onlyAdmin: true}, function(invokedBy) {
+let loadClassicMap = new Cmd({cmd: "m1", onlyAdmin: true}, (invokedBy) => {
   room.setCustomStadium(maps.powerClassic);
 });
 
-let loadBigMap = new Cmd("m2", {onlyAdmin: true}, function(invokedBy) {
+let loadBigMap = new Cmd({cmd: "m2", onlyAdmin: true}, (invokedBy) => {
   room.setCustomStadium(maps.powerBig);
 });
 
-let listAllGoals = new Cmd("goals", {showInChat: true}, function(invokedBy) {
+let listAllGoals = new Cmd({cmd: "goalsall", onlyAdmin: true}, (invokedBy) => {
   for (let scorer in goals) {
     sendMessage(`Gracz ${scorer} bramek ${goals[scorer]}`, invokedBy);
   }
 });
 
-let listTopPlayers = new Cmd("top5", {showInChat: true}, function(invokedBy) {
+let listTopPlayers = new Cmd({cmd: "top10", showInChat: true}, (invokedBy) => {
   let props = Object.keys(goals).map(function(key) {
     return { key: key, value: this[key] };
   }, goals);
 
   props.sort((p1, p2) => p2.value - p1.value);
-  let top5 = props.splice(0, 5);
+  let top10 = props.splice(0, 10);
   
-  for (let player of top5) {
+  for (let player of top10) {
     sendMessage(`Gracz ${player.key} bramek ${player.value}`, invokedBy);
   }
 });
 
-let listPlayerGoals = new Cmd("goals (.+)", {showInChat: true}, function(invokedBy, player) {
-  let score = goals[player] | 0;
+let listPlayerGoals = new Cmd({cmd: "goals", params: {name: "(.+)"}, showInChat: true}, (invokedBy, playerName) => {
+  let scorers = Object.keys(goals).filter(scorer => scorer.includes(playerName));
+  let score;
+  let player = null;
+
+  if (scorers.length === 1) {
+    score = goals[scorers[0]];
+    player = scorers[0];
+  } else if (!scorers.length) {
+    score = 0;
+  } else {
+    scorers = scorers.filter(scorer => scorer === playerName);
+    if (scorers.length === 1) {
+      score = goals[scorers[0]];
+      player = scorers[0];
+    } else {
+      return sendMessage(`Znaleziono wielu graczy pasujacych do wzorca ${playerName}`);
+    }
+  }
+
+  player = player || playerName;
   sendMessage(`Gracz ${player} bramek ${score}`, invokedBy);
 });
 
-let listUserCmds = new Cmd("komendy", {showInChat: true}, function(invokedBy) {
-  let list = cmdManager.listCmds("regular");
-  list = list.filter(cmd => cmd !== cmdPrefix + "login");
-  while (list.length > 0) {
+let listPlayerAssists = new Cmd({cmd: "assists", params: {name: "(.+)"}, showInChat: true}, (invokedBy, playerName) => {
+  let scorers = Object.keys(assists).filter(scorer => scorer.includes(playerName));
+  let score;
+  let player = null;
+
+  if (scorers.length === 1) {
+    score = assists[scorers[0]];
+    player = scorers[0];
+  } else if (!scorers.length) {
+    score = 0;
+  } else {
+    scorers = scorers.filter(scorer => scorer === playerName);
+    if (scorers.length === 1) {
+      score = assists[scorers[0]];
+      player = scorers[0];
+    } else {
+      return sendMessage(`Znaleziono wielu graczy pasujacych do wzorca ${playerName}`);
+    }
+  }
+
+  player = player || playerName;
+  sendMessage(`Gracz ${player} asyst ${score}`, invokedBy);
+});
+
+let listPlayerCmds = new Cmd({cmd: "komendy", showInChat: true}, (invokedBy) => {
+  let list = cmdManager.listPlayerCmds();
+  list = list.filter(cmd => !cmd.includes("login"));
+  while (list.length) {
     let cmds = list.splice(0, 8);
-    sendMessage(cmds.join(" "));
+    sendMessage(cmds.join(" "), invokedBy);
   }
 });
 
-let listAdminCmds = new Cmd("akomendy", {onlyAdmin: true}, function(invokedBy) {
-  let list = cmdManager.listCmds("admin");
-  list = list.filter(cmd => cmd !== cmdPrefix + "login");
-  while (list.length > 0) {
+let listAdminCmds = new Cmd({cmd: "akomendy", onlyAdmin: true}, (invokedBy) => {
+  let list = cmdManager.listAdminCmds();
+  list = list.filter(cmd => !cmd.includes("login"));
+  while (list.length) {
     let cmds = list.splice(0, 8);
-    sendMessage(cmds.join(" "));
+    sendMessage(cmds.join(" "), invokedBy);
   }
 });
 
-let freeSlotCmd = new Cmd("slot", {onlyAdmin: true}, function(invokedBy) {
+let freeSlotCmd = new Cmd({cmd: "slot", onlyAdmin: true}, (invokedBy) => {
   freeSlot(invokedBy);
 });
 
-let listPlayers = new Cmd("players", {onlyAdmin: true}, function(invokedBy) {
-  const players = room.getPlayerList();
+let listPlayers = new Cmd({cmd: "players", paramsOptional: true, params: {pattern: "(.+)"}, onlyAdmin: true}, (invokedBy, pattern) => {
+  let players = room.getPlayerList();
+  if (pattern)
+    players = players.filter(player => player.name.includes(pattern));
+
   for (let player of players) {
     sendMessage(`Gracz ${player.name}, id ${player.id}`);
   }
 });
 
-let goalInfoCmd = new Cmd("showgoal", {onlyAdmin: true}, function(invokedBy) {
-  showGoalInfo = !showGoalInfo;
-  sendMessage(`Informacje o golu zostały ${showGoalInfo ? "włączone" : "wyłączone"} przez ${invokedBy.name}`);
+let goalInfoCmd = new Cmd({cmd: "showgoal", onlyAdmin: true}, (invokedBy) => {
+  config.showGoalInfo = !config.showGoalInfo;
+  sendMessage(`Informacje o golu zostały ${config.showGoalInfo ? "włączone" : "wyłączone"} przez ${invokedBy.name}`);
 });
 
-let giveSuperadmin = new Cmd("givesa (.+)", {onlyAdmin: true}, function(invokedBy, playerName) {
-  if (isPlayerPrivileged(invokedBy)) return;
+let giveSuperadmin = new Cmd({cmd: "givesa", params: {name: "(.+)"}, onlySuperAdmin: true}, (invokedBy, playerName) => {
   const player = room.getPlayerList().filter(player => player.name === playerName)[0];
-  if (player) {
-    privilegedPlayers.push(playerName);
-    sendMessage("Done");
+  if (player && !isSuperAdmin(player)) {
+    setSuperAdmin(player);
+    sendMessage("");
   }
 });
 
-let stopCmdForPlayerByName = new Cmd("bancmd (.+)", {onlyAdmin: true}, function(invokedBy, playerName) {
-  const player = room.getPlayerList().filter(player => player.name === playerName)[0];
-  if (player) {
-    if (canPlayerInvokeCmd(player)) {
-      restrictedPlayers.names.push(playerName);
-      sendMessage(`Gracz ${playerName} został pozbawiony możliwości wywoływania komend przez ${invokedBy.name}`);
-    } else {
-      let id = restrictedPlayers.names.indexOf(playerName);
-      restrictedPlayers.names.splice(id, 1);
-      sendMessage(`Gracz ${playerName} otrzymał możliwość wywoływania komend przez ${invokedBy.name}`);
-    }
+let stopCmdForPlayerByName = new Cmd({
+  cmd: "nocmd", params: {name: "(.+)"}, onlyAdmin: true, helpText: "blokuje komendy dla gracza"}, (invokedBy, playerName) => {
+  let players = room.getPlayerList().filter(player => player.name.includes(playerName));
+  
+  if (players.length === 1) {
+    process(players);
+  } else if (!players.length) {
+    sendMessage(`${playerName} nie został odnaleziony`);
   } else {
-    sendMessage(`Gracz ${playerName} nie został znaleziony`);
+    players = players.filter(player => player.name === playerName);
+    if (players.length === 1) {
+      process(players);
+    } else {
+      sendMessage(`Znaleziono wielu graczy pasujących do wzorca ${playerName}`);
+    }
   }
-});
 
-let stopCmdForPlayerById = new Cmd("bancmdid (\\d+)", {onlyAdmin: true}, function(invokedBy, playerId) {
-  playerId = Number(playerId);
-  const player = room.getPlayerList().filter(player => player.id === playerId)[0];
-  if (player) {
+  function process(players) {
+    let player = players[0];
+    if (player.id === invokedBy.id) {
+      return sendMessage("Nie możesz pozbawić sam siebie możliwości wykonywania komend");
+    }
     if (canPlayerInvokeCmd(player)) {
-      restrictedPlayers.ids.push(playerId);
+      blockCmdForPlayer(player);
       sendMessage(`Gracz ${player.name} został pozbawiony możliwości wywoływania komend przez ${invokedBy.name}`);
     } else {
-      let id = restrictedPlayers.ids.indexOf(playerId);
-      restrictedPlayers.ids.splice(id, 1);
+      unblockCmdForPlayer(player);
+      sendMessage(`Gracz ${player.name} otrzymał możliwość wywoływania komend przez ${invokedBy.name}`);
+    }
+  }
+});
+
+let stopCmdForPlayerById = new Cmd({
+  cmd: "nocmdid", params: {player_id: "(\\d+)"}, onlyAdmin: true, helpText: "blokuje komendy dla gracza"}, (invokedBy, playerId) => {
+  let player = room.getPlayerList().filter(player => player.id === Number(playerId))[0];
+  
+  if (player) {    
+    if (canPlayerInvokeCmd(player)) {
+      blockCmdForPlayer(player);
+      sendMessage(`Gracz ${player.name} został pozbawiony możliwości wywoływania komend przez ${invokedBy.name}`);
+    } else {
+      unblockCmdForPlayer(player);
       sendMessage(`Gracz ${player.name} otrzymał możliwość wywoływania komend przez ${invokedBy.name}`);
     }
   } else {
-    sendMessage(`Gracz od ID ${playerId} nie został znaleziony`);
+    sendMessage(`Gracz o ID ${playerId} nie został odnaleziony`);
   }
 });
 
-let randomTeams = new Cmd("random (\\d+)", {onlyAdmin: true}, function(invokedBy, playersInTeam) {
+let randomTeams = new Cmd({
+  cmd: "random", params: {team_size: "(\\d+)"}, showInChat: true, onlyAdmin: true}, (invokedBy, playersInTeam) => {
   playersInTeam = Number(playersInTeam);
   const players = room.getPlayerList().filter(player => player.id !== 0);
 
@@ -384,69 +626,76 @@ let randomTeams = new Cmd("random (\\d+)", {onlyAdmin: true}, function(invokedBy
   }
 
   function getFreePlayer() {
-      let randomId = getRandomInt(0, freePlayers.length - 1);
-      let player = freePlayers[randomId];
-      freePlayers.splice(randomId, 1);
-      return player;
+    let randomId = getRandomInt(0, freePlayers.length - 1);
+    let player = freePlayers[randomId];
+    freePlayers.splice(randomId, 1);
+    return player;
   }
 
   while (freePlayers && (redPlayers.length < playersInTeam || bluePlayers.length < playersInTeam)) {
-    
+    let message = "";
+
     if (redPlayers.length < playersInTeam) {
       let player = getFreePlayer();
       room.setPlayerTeam(player.id, 1);
       redPlayers.push(player);
-      sendMessage(`Gracz ${player.name} został przydzielony do drużyny Red`);
+      message += `${player.name} --> Red, `;
     }
 
     if (bluePlayers.length < playersInTeam) {
       let player = getFreePlayer();
       room.setPlayerTeam(player.id, 2);
       bluePlayers.push(player);
-      sendMessage(`Gracz ${player.name} został przydzielony do drużyny Blue`);
+      message += `${player.name} --> Blue, `;
     }
+
+    sendMessage(message);
   }
 });
 
 cmdManager = new CmdManager();
-cmdManager.addCmd(mutePlayerByName);
-cmdManager.addCmd(mutePlayerById);
-cmdManager.addCmd(silentMutePlayerByName);
-cmdManager.addCmd(silentMutePlayerById);
-cmdManager.addCmd(adminLogin);
-cmdManager.addCmd(adminLogout);
-cmdManager.addCmd(clearBans);
-cmdManager.addCmd(loadClassicMap);
-cmdManager.addCmd(loadBigMap);
-cmdManager.addCmd(listAllGoals);
-cmdManager.addCmd(listPlayerGoals);
-cmdManager.addCmd(listUserCmds);
-cmdManager.addCmd(listAdminCmds);
-cmdManager.addCmd(freeSlotCmd);
-cmdManager.addCmd(randomTeams);
-cmdManager.addCmd(listPlayers);
-cmdManager.addCmd(listTopPlayers);
-cmdManager.addCmd(goalInfoCmd);
-cmdManager.addCmd(giveSuperadmin);
-cmdManager.addCmd(stopCmdForPlayerByName);
-cmdManager.addCmd(stopCmdForPlayerById);
-cmdManager.addCmd(clearMutes);
-cmdManager.addCmd(clearCmdRestrictions);
-cmdManager.addCmd(muteAll);
+cmdManager.add(mutePlayerByName);
+cmdManager.add(mutePlayerById);
+cmdManager.add(silentMutePlayerByName);
+cmdManager.add(silentMutePlayerById);
+cmdManager.add(adminLogin);
+cmdManager.add(adminLogout);
+cmdManager.add(clearBans);
+cmdManager.add(loadClassicMap);
+cmdManager.add(loadBigMap);
+cmdManager.add(listAllGoals);
+cmdManager.add(listPlayerGoals);
+cmdManager.add(listPlayerCmds);
+cmdManager.add(listAdminCmds);
+cmdManager.add(freeSlotCmd);
+cmdManager.add(randomTeams);
+cmdManager.add(listPlayers);
+cmdManager.add(listTopPlayers);
+cmdManager.add(goalInfoCmd);
+cmdManager.add(giveSuperadmin);
+cmdManager.add(stopCmdForPlayerByName);
+cmdManager.add(stopCmdForPlayerById);
+cmdManager.add(clearMutes);
+cmdManager.add(clearNoCmdPlayers);
+cmdManager.add(muteAll);
+cmdManager.add(toggleChat);
+cmdManager.add(muteNewPlayers);
+cmdManager.add(listPlayerAssists);
 
 function parseCmd(player, message) {
-  let cmdData = cmdManager.matchCmd(message);
-  if (cmdData) {
-    if (cmdData.cmd.opts.onlyAdmin && !player.admin)
-      return false;
-
-    let args = cmdData.args;
-    args.unshift(player);
-    let func = cmdData.cmd.action;
-    func.apply(null, args);
-
-    if (cmdData.cmd.opts.showInChat)
-      return true;
+  let cmd = cmdManager.findCmd(message);
+  if (cmd) {
+    if (cmd.canPlayerExecute(player)) {
+      let response = cmdManager.extractArguments(cmd, message);
+      if (response.error) {
+        sendMessage(response.error, player);
+      } else {
+        let args = response.args;
+        args.unshift(player);
+        cmd.execute(args);
+      }
+      return cmd.showInChat;
+    }
 
     return false;
   }
@@ -455,55 +704,86 @@ function parseCmd(player, message) {
 }
 
 function sendMessage(message, initiator) {
-  if (!initiator || !isPlayerMuted(initiator))
-    room.sendChat(messagePrefix + message);
+  if ((!initiator || !isPlayerMuted(initiator)) && (config.chatEnabled || initiator && isSuperAdmin(initiator))) {
+    room.sendChat(prefixes.message + message);
+  }
 }
 
 function isPlayerMuted(player) {
-  return muted.names.includes(player.name) || muted.ids.includes(player.id);
+  return mutedPlayers.includes(player.id);
 }
 
-function isPlayerPrivileged(player) {
-  return privilegedPlayers.includes(player.name);
+function mutePlayer(player) {
+    mutedPlayers.push(player.id);
+}
+
+function unmutePlayer(player) {
+  let index = mutedPlayers.indexOf(player.id);
+  if (index !== -1) {
+    mutedPlayers.splice(index, 1);
+  }
+}
+
+function isSuperAdmin(player) {
+  return superAdmins.includes(player.name);
+}
+
+function setSuperAdmin(player) {
+  superAdmins.push(player.name);
 }
 
 function canPlayerInvokeCmd(player) {
-  return !restrictedPlayers.names.includes(player.name) && !restrictedPlayers.ids.includes(player.id);
+  return !noCmdPlayers.includes(player.id);
+}
+
+function blockCmdForPlayer(player) {
+  noCmdPlayers.push(player.id);
+}
+
+function unblockCmdForPlayer(player) {
+  let index = noCmdPlayers.indexOf(player.id);
+  if (index !== -1) {
+    noCmdPlayers.splice(index, 1);
+  }
 }
 
 function showMapCmds() {
-  sendMessage(`Wpisz ${cmdPrefix}m1 aby załadować mapę Power Classic`);
-  sendMessage(`Wpisz ${cmdPrefix}m2 aby załadować mapę Power Big`);
+  sendMessage(`Wpisz ${prefixes.cmd}m1 aby załadować mapę Power Classic`);
+  sendMessage(`Wpisz ${prefixes.cmd}m2 aby załadować mapę Power Big`);
 }
 
 function updateAdmins() {
   const players = room.getPlayerList().filter(player => player.id != 0);
   if (players.length == 0) return;
   if (players.find(player => player.admin) != null) return;
-  room.setPlayerAdmin(players[0].id, true);
-  sendMessage(`Gracz ${players[0].name} został wytypowany na Admina`);
-  sendMessage(`Player ${players[0].name} has been arbitrary chosen as Admin`);
+
+  let id = getRandomInt(0, players.length - 1);
+  let newAdmin = players[id];
+  room.setPlayerAdmin(newAdmin.id, true);
+
+  sendMessage(`Gracz ${newAdmin.name} został wytypowany na Admina`);
+  sendMessage(`Player ${newAdmin.name} has been arbitrary chosen as Admin`);
   showMapCmds();
 }
 
 function freeSlot(invokedBy) {
   const players = room.getPlayerList().filter(player => player.id !== 0);
-  if (players.length !== slots) return;
+  if (players.length !== game.maxPlayers) return;
 
   for (let player of players) {
-    if (player.team === 0 && !player.admin && !isPlayerPrivileged(player)) {
+    if (player.team === 0 && !player.admin && !isSuperAdmin(player)) {
       return room.kickPlayer(player.id, "Potrzebny slot");
     }
   }
 
   for (let player of players) {
-    if (!player.admin && !isPlayerPrivileged(player)) {
+    if (!player.admin && !isSuperAdmin(player)) {
       return room.kickPlayer(player.id, "Potrzebny slot");
     }
   }
 
   for (let player of players) {
-    if (!isPlayerPrivileged(player)) {
+    if (!isSuperAdmin(player)) {
       if (invokedBy !== undefined && invokedBy.id !== player.id) {
         return room.kickPlayer(player.id, "Potrzebny slot");
       }
@@ -524,17 +804,78 @@ function clearAllBans(initiator) {
 }
 
 function clearAllMutes(initiator) {
-  muted.ids = [];
-  muted.names = [];
-  sendMessage(`Wszyscy wyciszeni gracze zostali odciszeni przez ${initiator}`);
+  mutedPlayers = [];
+  if (initiator) {
+    sendMessage(`Wszyscy wyciszeni gracze zostali odciszeni przez ${initiator}`);
+  }
 }
 
-function clearAllRestrictedPlayers(initiator) {
-  restrictedPlayers.ids = [];
-  restrictedPlayers.names = [];
-  sendMessage(`Wszyscy gracze bez możliwości używania komend dostali ją z powrotem przez ${initiator}`);
+function clearAllNoCmdPlayers(initiator) {
+  noCmdPlayers = [];
+  sendMessage(`Wszyscy gracze bez możliwości używania komend dostali ją z powrotem od ${initiator}`);
 }
 
-setInterval(clearAllBans, 1000 * 60 * 60, "Arbitra");
-setInterval(clearAllMutes, 1000 * 60 * 60, "Arbitra");
-setInterval(clearAllRestrictedPlayers, 1000 * 60 * 60, "Arbitra");
+function updateAssistingPlayer(initiatingPlayer) {
+  let candidate = null;
+
+  if (goal.kick && goal.touch) {
+    if (goal.kick.time > goal.touch.time) {
+      candidate = goal.kick.player;
+    } else {
+      candidate = goal.touch.player;
+    }
+  } else if (goal.kick) {
+    candidate = goal.kick.player;
+  } else if (goal.touch) {
+    candidate = goal.touch.player;
+  }
+
+  if (candidate && candidate.id !== initiatingPlayer.id) {
+    assistingPlayer = candidate;
+  }
+}
+
+function pointDistance(p1, p2) {
+  let d1 = p1.x - p2.x;
+  let d2 = p1.y - p2.y;
+  return Math.sqrt(d1 * d1 + d2 * d2);
+}
+
+function saveGoals() {
+  let data = JSON.stringify(goals);
+  download(data, "goals.txt", "text/plain");
+}
+
+function saveAssists() {
+  let data = JSON.stringify(assists);
+  download(data, "assists.txt", "text/plain");
+}
+
+function loadGoals(data) {
+  goals = JSON.parse(data);
+}
+
+function loadAssists(data) {
+  assists = JSON.parse(data);
+}
+
+function download(data, filename, type) {
+    var file = new Blob([data], {type: type});
+    var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);  
+    }, 0); 
+}
+
+let clearBansInterval = setInterval(clearAllBans, 1000 * 60 * 60, "Arbitra");
+let clearMutesInterval = setInterval(clearAllMutes, 1000 * 60 * 60, "Arbitra");
+let clearNoCmdInterval = setInterval(clearAllNoCmdPlayers, 1000 * 60 * 60, "Arbitra");
+
+let saveGoalsInterval = setInterval(saveGoals, 1000 * 60 * 30);
+let saveAssistsInterval = setInterval(saveAssists, 1000 * 60 * 30);
