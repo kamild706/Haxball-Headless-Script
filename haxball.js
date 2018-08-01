@@ -1,7 +1,7 @@
 const game = {
-  roomName: "POWER GAME 2v2 3v3",
-  maxPlayers: 12,
-  playerName: "Arbiter",
+  roomName: "POWER SERVER",
+  maxPlayers: 8,
+  playerName: "Arbiter­",
   public : true,
   geo: {
     code: "PL",
@@ -22,83 +22,95 @@ const prefixes = {
   cmd: "!"
 };
 
-let superAdmins = [];
+let superAdmins = [0];
 let mutedPlayers = [];
 let noCmdPlayers = [];
+let afkPlayers = [];
+
+let adminAccess = {
+  "nickname1": "his_password",
+};
+
+let authenticatedAdmins = [];
+let adminLogs = {};
 
 const maps = {
   powerClassic: `{"name":"Joe's power classic night edition","width":420,"height":200,"spawnDistance":170,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":370,"y":-170,"trait":"ballAreaVertical"},{"x":370,"y":-64,"trait":"ballAreaVertical"},{"x":370,"y":64,"trait":"ballAreaVertical"},{"x":370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":64,"trait":"ballAreaVertical"},{"x":-370,"y":170,"trait":"ballAreaHorizontal"},{"x":-370,"y":-170,"trait":"ballAreaVertical"},{"x":-370,"y":-64,"trait":"ballAreaVertical"},{"x":-400,"y":-54,"trait":"goalNet"},{"x":-400,"y":54,"trait":"goalNet"},{"x":400,"y":-54,"trait":"goalNet"},{"x":400,"y":54,"cMask":["ball"]},{"x":371,"y":-170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":-64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":170,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":371,"y":64,"bCoef":0,"cMask":["ball"],"trait":"ballAreaVertical"},{"x":-371,"y":-170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":64,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":170,"bCoef":1,"cMask":["ball"]},{"x":-371,"y":-171,"cMask":["ball"]},{"x":371,"y":-171,"cMask":["ball"]},{"x":-371,"y":171,"cMask":["ball"]},{"x":371,"y":171,"cMask":["ball"]},{"x":0,"y":75,"trait":"kickOffBarrier"},{"x":0,"y":170,"trait":"kickOffBarrier"},{"x":0,"y":-170,"trait":"kickOffBarrier"},{"x":0,"y":-75,"trait":"kickOffBarrier"},{"x":0,"y":200,"trait":"kickOffBarrier"},{"x":0,"y":-200,"trait":"kickOffBarrier"},{"x":-383,"y":-170,"trait":"bugFix"},{"x":-383,"y":-64,"trait":"bugFix"},{"x":-383,"y":64,"trait":"bugFix"},{"x":-383,"y":170,"trait":"bugFix"},{"x":383,"y":-170,"trait":"bugFix"},{"x":383,"y":-64,"trait":"bugFix"},{"x":383,"y":64,"trait":"bugFix"},{"x":383,"y":170,"trait":"bugFix"}],"segments":[{"v0":0,"v1":1,"trait":"ballAreaVertical"},{"v0":2,"v1":3,"trait":"ballAreaVertical"},{"v0":4,"v1":5,"trait":"ballAreaVertical"},{"v0":6,"v1":7,"trait":"ballAreaVertical"},{"v0":12,"v1":13,"bCoef":0,"trait":"ballAreaVertical"},{"v0":14,"v1":15,"bCoef":0,"trait":"ballAreaVertical"},{"v0":16,"v1":17,"bCoef":0,"trait":"ballAreaVertical"},{"v0":18,"v1":19,"bCoef":0,"trait":"ballAreaVertical"},{"v0":24,"v1":25,"trait":"kickOffBarrier"},{"v0":26,"v1":27,"trait":"kickOffBarrier"},{"v0":6,"v1":0,"trait":"ballAreaHorizontal"},{"v0":5,"v1":3,"trait":"ballAreaHorizontal"},{"v0":20,"v1":21,"trait":"ballAreaHorizontal"},{"v0":22,"v1":23,"trait":"ballAreaHorizontal"},{"v0":1,"v1":2,"trait":"goalLine"},{"v0":7,"v1":4,"trait":"goalLine"},{"v0":13,"v1":15,"trait":"goalLine"},{"v0":17,"v1":18,"trait":"goalLine"},{"v0":7,"v1":8,"trait":"goalNet"},{"v0":8,"v1":9,"trait":"goalNet"},{"v0":9,"v1":4,"trait":"goalNet"},{"v0":1,"v1":10,"trait":"goalNet"},{"v0":10,"v1":11,"trait":"goalNet"},{"v0":11,"v1":2,"trait":"goalNet"},{"v0":27,"v1":24,"color":"ffffff","trait":"line"},{"v0":27,"v1":24,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":27,"v1":24,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":25,"v1":28,"vis":false,"trait":"kickOffBarrier"},{"v0":26,"v1":29,"vis":false,"trait":"kickOffBarrier"},{"v0":30,"v1":31,"trait":"bugFix"},{"v0":32,"v1":33,"trait":"bugFix"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"}],"goals":[{"p0":[-382,-64],"p1":[-382,64],"team":"red"},{"p0":[382,-64],"p1":[382,64],"team":"blue"}],"discs":[{"pos":[-370,-64],"trait":"goalPost"},{"pos":[-370,64],"trait":"goalPost"},{"pos":[370,-64],"trait":"goalPost"},{"pos":[370,64],"trait":"goalPost"}],"planes":[{"normal":[0,1],"dist":-200},{"normal":[0,-1],"dist":-200},{"normal":[-1,0],"dist":-420},{"normal":[1,0],"dist":-420},{"normal":[0,1],"dist":-170,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-170,"bCoef":1,"cMask":["ball"]}],"traits":{"ballAreaVertical":{"vis":true,"color":"C7C730","bCoef":1,"cMask":["ball"]},"ballAreaHorizontal":{"vis":true,"color":"363333","bCoef":0,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"goalLine":{"vis":true,"cMask":["wall"],"bCoef":0,"color":"ffffff"},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`,
   powerBig: `{"name":"Joe's power big night edition","width":600,"height":270,"spawnDistance":350,"bg":{"type":"hockey","height":0,"width":0,"cornerRadius":0,"kickOffRadius":0},"playerPhysics":{"bCoef":0.5,"invMass":0.5,"damping":0.96,"acceleration":0.12,"kickingAcceleration":0.12,"kickingDamping":0.96,"kickStrength":11},"vertexes":[{"x":-550,"y":240,"cMask":["ball"]},{"x":550,"y":240,"cMask":["ball"]},{"x":-550,"y":-240,"cMask":["ball"],"trait":"ballArea"},{"x":550,"y":-240,"cMask":["ball"]},{"x":-550,"y":-80,"cMask":["ball"],"trait":"ballArea","color":"363333"},{"x":-550,"y":80,"cMask":["ball"]},{"x":550,"y":-80,"cMask":["ball"],"pos":[550,-80]},{"x":550,"y":80,"cMask":["ball"]},{"x":0,"y":-240,"trait":"kickOffBarrier"},{"x":0,"y":-80,"trait":"kickOffBarrier"},{"x":0,"y":80,"trait":"kickOffBarrier"},{"x":0,"y":240,"trait":"kickOffBarrier"},{"x":0,"y":-270,"trait":"kickOffBarrier"},{"x":0,"y":270,"trait":"kickOffBarrier"},{"x":-580,"y":-70,"cMask":["ball"]},{"x":-580,"y":70,"cMask":["ball"]},{"x":580,"y":-70,"cMask":["ball"]},{"x":580,"y":70,"cMask":["ball"]},{"x":-551,"y":-241,"trait":"line"},{"x":551,"y":-241,"trait":"line"},{"x":-551,"y":241,"cMask":["ball"]},{"x":551,"y":241,"cMask":["ball"]},{"x":551,"y":-240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":551,"y":240,"cMask":["ball"]},{"x":-551,"y":-240,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":-80,"bCoef":1,"cMask":["ball"],"trait":"line"},{"x":-551,"y":80,"cMask":["ball"]},{"x":-551,"y":240,"cMask":["ball"]},{"x":551,"y":-80,"cMask":["ball"]},{"x":551,"y":80,"cMask":["ball"]},{"x":-551,"y":-80,"cMask":["ball"]},{"x":-551,"y":80,"cMask":["ball"]},{"x":-563,"y":-240,"trait":"bugFix"},{"x":-563,"y":-80,"trait":"bugFix"},{"x":-563,"y":80,"trait":"bugFix"},{"x":-563,"y":240,"trait":"bugFix"},{"x":563,"y":80,"trait":"bugFix"},{"x":563,"y":240,"trait":"bugFix"},{"x":563,"y":-240,"trait":"bugFix"},{"x":563,"y":-80,"trait":"bugFix"}],"segments":[{"v0":2,"v1":4,"color":"C7C730","trait":"ballArea"},{"v0":0,"v1":5,"color":"C7C730","trait":"ballArea"},{"v0":3,"v1":6,"color":"C7C730","trait":"ballArea"},{"v0":1,"v1":7,"color":"C7C730","trait":"ballArea"},{"v0":22,"v1":23,"color":"C7C730","trait":"line"},{"v0":24,"v1":25,"color":"C7C730","trait":"line"},{"v0":26,"v1":27,"color":"C7C730","trait":"line"},{"v0":28,"v1":29,"color":"C7C730","trait":"line"},{"v0":6,"v1":7,"color":"ffffff","trait":"line"},{"v0":4,"v1":5,"color":"ffffff","trait":"line"},{"v0":8,"v1":9,"trait":"kickOffBarrier"},{"v0":10,"v1":11,"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":180,"cGroup":["redKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"curve":-180,"cGroup":["blueKO"],"trait":"kickOffBarrier"},{"v0":9,"v1":10,"color":"ffffff","trait":"line"},{"v0":8,"v1":12,"vis":false,"trait":"kickOffBarrier"},{"v0":11,"v1":13,"vis":false,"trait":"kickOffBarrier"},{"v0":0,"v1":1,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":2,"v1":3,"color":"363333","bCoef":0,"trait":"ballArea"},{"v0":18,"v1":19,"color":"363333","trait":"line"},{"v0":20,"v1":21,"color":"363333","trait":"line"},{"v0":4,"v1":14,"trait":"goalNet"},{"v0":5,"v1":15,"trait":"goalNet"},{"v0":14,"v1":15,"trait":"goalNet"},{"v0":6,"v1":16,"trait":"goalNet"},{"v0":16,"v1":17,"trait":"goalNet"},{"v0":17,"v1":7,"trait":"goalNet"},{"v0":30,"v1":31,"color":"ffffff","trait":"line"},{"v0":32,"v1":33,"color":"ffffff","trait":"line"},{"v0":34,"v1":35,"trait":"bugFix"},{"v0":36,"v1":37,"trait":"bugFix"},{"v0":38,"v1":39,"trait":"bugFix"},{"v0":40,"v1":41,"trait":"bugFix"}],"goals":[{"p0":[-562,-80],"p1":[-562,80],"team":"red"},{"p0":[562,-80],"p1":[562,80],"team":"blue"}],"discs":[{"pos":[-550,-80],"trait":"goalPost"},{"pos":[-550,80],"trait":"goalPost"},{"pos":[550,-80],"trait":"goalPost"},{"pos":[550,80],"trait":"goalPost"}],"planes":[{"normal":[-1,0],"dist":-600},{"normal":[1,0],"dist":-600},{"normal":[0,1],"dist":-270},{"normal":[0,-1],"dist":-270},{"normal":[0,1],"dist":-240,"bCoef":1,"cMask":["ball"]},{"normal":[0,-1],"dist":-240,"bCoef":1,"cMask":["ball"]}],"traits":{"ballArea":{"vis":true,"bCoef":1,"cMask":["ball"]},"goalPost":{"radius":8,"color":"FFCCCC","invMass":0,"bCoef":0.5},"goalNet":{"vis":true,"color":"363333","bCoef":0.1,"cMask":["ball"]},"kickOffBarrier":{"vis":true,"color":"ffffff","bCoef":0,"cGroup":["redKO","blueKO"],"cMask":["red","blue"]},"line":{"vis":true,"cMask":["wall"],"bCoef":0},"bugFix":{"vis":false,"cMask":["ball"],"bCoef":1}}}`
 };
 
-let goal = {
-  kick: {
+let ball = {
+  kickedBy: {
     player: null,
     time: null,
   },
-  touch: {
+  touchedBy: {
     player: null,
     time: null
-  }
+  },
+  assistingPlayer: null
 };
 
-let assistingPlayer = null;
-
 let goals = {};
+let ownGoals = {};
 let assists = {};
 let cmdManager;
+let nextPauseAction = true;
 
-const room = HBInit(game);
-
+const room = new HBInit(game);
+let bans = {};
 
 room.onPlayerBallKick = player => {
   updateAssistingPlayer(player);
 
   let time = Date.now();
   let kick = {time, player};
-  goal.kick = kick;
+  ball.kickedBy = kick;
 };
 
 room.onTeamGoal = team => {
   let scorer;
 
-  if (goal.kick && goal.touch) {
-    if (goal.kick.time > goal.touch.time) {
-      scorer = goal.kick.player;
+  if (ball.kickedBy && ball.touchedBy) {
+    if (ball.kickedBy.time > ball.touchedBy.time) {
+      scorer = ball.kickedBy.player;
     } else {
-      scorer = goal.touch.player;
+      scorer = ball.touchedBy.player;
     }
-  } else if (goal.kick) {
-    scorer = goal.kick.player;
-  } else if (goal.touch) {
-    scorer = goal.touch.player;
+  } else if (ball.kickedBy) {
+    scorer = ball.kickedBy.player;
+  } else if (ball.touchedBy) {
+    scorer = ball.touchedBy.player;
   }
 
   if (scorer) {
     let ownGoal = scorer.team !== team;
-    let assistValid = assistingPlayer && !ownGoal && assistingPlayer.team === team && assistingPlayer.id !== scorer.id;
+    let assistOccured = ball.assistingPlayer && !ownGoal && ball.assistingPlayer.team === team && ball.assistingPlayer.id !== scorer.id;
 
     if (config.showGoalInfo) {
       let message = `Gola ${ownGoal ? "samobójczego" : ""} zdobył gracz ${scorer.name}`;
-      if (assistValid) {
-        message += ` (${assistingPlayer.name})`;
+      if (assistOccured) {
+        message += ` (${ball.assistingPlayer.name})`;
       }
       sendMessage(message);
     }
 
-    if (!ownGoal) {
+    if (ownGoal) {
+      let score = ownGoals[scorer.name] || 0;
+      ownGoals[scorer.name] = score + 1;
+    } else {
       let score = goals[scorer.name] || 0;
       goals[scorer.name] = score + 1;
     }
 
-    if (assistValid) {
-      let score = assists[assistingPlayer.name] || 0;
-      assists[assistingPlayer.name] = score + 1;
+    if (assistOccured) {
+      let score = assists[ball.assistingPlayer.name] || 0;
+      assists[ball.assistingPlayer.name] = score + 1;
     }
   }
 
-  goal.kick = null;
-  goal.touch = null;
+  ball.kickedBy = null;
+  ball.touchedBy = null;
 };
 
 room.onPlayerChat = (player, message) => {
@@ -113,48 +125,97 @@ room.onPlayerChat = (player, message) => {
 };
 
 room.onPlayerKicked = (kickedPlayer, reason, ban, byPlayer) => {
-  if (isSuperAdmin(kickedPlayer)) {
+  if (isSuperAdmin(kickedPlayer) || authenticatedAdmins.includes(kickedPlayer.id) && !isSuperAdmin(byPlayer)) {
     if (ban)
       room.clearBans();
 
-    room.setPlayerAdmin(byPlayer.id, false);
-    sendMessage("Próba wyrzucenia superadministratora!");
+    room.kickPlayer(byPlayer.id, "Tak się bawić nie będziemy", true);
+  }
+
+  let banInfo = {};
+  banInfo.banned = kickedPlayer.name;
+  banInfo.admin = byPlayer.name;
+  banInfo.reason = reason;
+  banInfo.isBan = ban;
+  banInfo.time = new Date();
+
+  if (!bans[byPlayer.id]) {
+    bans[byPlayer.id] = [];
+  }
+  bans[byPlayer.id].unshift(banInfo);
+
+  if (!authenticatedAdmins.includes(byPlayer.id) && !isSuperAdmin(byPlayer)) {
+    let playerBans = bans[byPlayer.id].filter(ban => ban.isBan);
+
+    if (playerBans.length >= 5) {
+      let lastBan = playerBans[0];
+      let banToCompare = playerBans[4];
+      let dateDiff = lastBan.time - banToCompare.time;
+      if (dateDiff <= 1000 * 60 * 5) {
+        clearAllBans("Admina");
+        room.kickPlayer(byPlayer.id, "żegnaj trollu", true);
+      }
+    }
   }
 };
 
 room.onPlayerAdminChange = (changedPlayer, byPlayer) => {
-  if (!changedPlayer.admin && isSuperAdmin(changedPlayer)) {
+  if (!changedPlayer.admin && (isSuperAdmin(changedPlayer) || authenticatedAdmins.includes(changedPlayer.id) && !isSuperAdmin(byPlayer))) {
     if (byPlayer !== null && byPlayer.name !== game.playerName) {
       room.setPlayerAdmin(changedPlayer.id, true);
       room.setPlayerAdmin(byPlayer.id, false);
 
-      sendMessage("Próba odebrania uprawnień superadministratorowi!");
+      sendMessage("Próba odebrania uprawnień adminowi wyższej rangi!");
     }
   }
 };
 
 room.onStadiumChange = (newStadiumName, byPlayer) => {
-  if (!/power/i.exec(newStadiumName) && !isSuperAdmin(byPlayer)) {
-    sendMessage("Tylko mapy z serii Power");
+  // Game host has to be set as SuperAdmin
+  if (!isSuperAdmin(byPlayer)) {
+    if (/finezja/i.exec(newStadiumName)) {
+      sendMessage("Finezja to syf, na tym grać nie będziemy");
+    } else if (newStadiumName === maps.powerClassic) {
+      return room.setCustomStadium(maps.powerClassic);
+    } else if (newStadiumName === maps.powerBig) {
+      return room.setCustomStadium(maps.powerBig);
+    } else {
+      sendMessage(`Nie możesz ustawić innej mapy`);
+    }
     showMapCmds();
     room.setCustomStadium(maps.powerClassic);
   }
-}
+};
 
 room.onPlayerJoin = player => {
-  updateAdmins();
+  // updateAdmins();
   if (config.muteNewPlayers) {
     mutePlayer(player);
   }
 };
 
 room.onPlayerLeave = player => {
-  updateAdmins();
+  unsetPlayerAfk(player);
+  unsetSuperAdmin(player);
+  // updateAdmins();
+  if (player.team !== 0 && room.getScores()) {
+    let players = room.getPlayerList().filter(player => player.team === 0 && !isPlayerAfk(player));
+    players = players.filter(player => player.id !== 0);
+    if (players.length) {
+      room.pauseGame(true);
+      sendMessage("Gracz z boiska opuścił serwer. Są dostępni gracze na ławce.");
+    }
+  }
 };
 
 room.onPlayerTeamChange = player => {
   if (player.id === 0) {
     room.setPlayerTeam(0, 0);
+  }
+
+  if (player.team !== 0 && isPlayerAfk(player)) {
+    sendMessage(`Gracz ${player.name} jest AFK`);
+    room.pauseGame(true);
   }
 };
 
@@ -174,15 +235,36 @@ room.onGameTick = () => {
 
       let time = Date.now();
       let touch = {time, player};
-      goal.touch = touch;
+      ball.touchedBy = touch;
     }
   }
 };
 
 room.onGameStart = () => {
-  goal.kick = null;
-  goal.touch = null;
-  assistingPlayer = null;
+  ball.kickedBy = null;
+  ball.touchedBy = null;
+  ball.assistingPlayer = null;
+
+  let players = room.getPlayerList().filter(player => player.team !== 0 && isPlayerAfk(player));
+  if (players.length === 1) {
+    sendMessage(`Gracz ${players[0].name} jest AFK`);
+    room.pauseGame(true);
+  } else if (players.length > 1) {
+    sendMessage(`Gracze ${players.map(player => player.name).join(", ")} są AFK`);
+    room.pauseGame(true);
+  }
+};
+
+room.onGamePause = () => {
+  nextPauseAction = false;
+};
+
+room.onGameUnpause = () => {
+  nextPauseAction = true;
+};
+
+room.onGameStop = () => {
+  showAfkPlayers();
 };
 
 class CmdManager {
@@ -308,6 +390,22 @@ class Cmd {
   }
 }
 
+let setPlayerAfkCmd = new Cmd({cmd: "afk", showInChat: true}, (invokedBy) => {
+  if (!isPlayerAfk(invokedBy)) {
+    setPlayerAfk(invokedBy);
+    sendMessage(`Gracz ${invokedBy.name} zaraz wraca`, invokedBy);
+  }
+});
+
+let setPlayerBackCmd = new Cmd({cmd: "jj", showInChat: true}, (invokedBy) => {
+  unsetPlayerAfk(invokedBy);
+  sendMessage(`Gracz ${invokedBy.name} jest z powrotem`, invokedBy);
+});
+
+let listAfkPlayers = new Cmd({cmd: "lafk", showInChat: true}, (invokedBy) => {
+  showAfkPlayers(invokedBy);
+});
+
 let mutePlayerByName = new Cmd({cmd: "mute", params: {name: "(.+)"}, onlyAdmin: true}, (invokedBy, nameToMute) => {
   let players = room.getPlayerList().filter(player => player.name.includes(nameToMute));
   
@@ -397,10 +495,20 @@ let silentMutePlayerById = new Cmd({cmd: "smuteid", params: {id: "(\\d+)"}, only
   }
 });
 
-let adminLogin = new Cmd({cmd: `login ${config.adminPassword}`}, (invokedBy) => {
+let superAdminLogin = new Cmd({cmd: `slogin ${config.adminPassword}`}, (invokedBy) => {
   if (!invokedBy.admin) {
     room.setPlayerAdmin(invokedBy.id, true);
     setSuperAdmin(invokedBy);
+  }
+});
+
+let adminLogin = new Cmd({cmd: "alogin", params: {password: "(.+)"}, paramsOptional: true}, (invokedBy, password) => {
+  if (!invokedBy.admin) {
+    authenticatedAdmins.push(invokedBy.id);
+    let adminPassword = adminAccess[invokedBy.name];
+    if (adminAccess[invokedBy.name] && adminPassword === password) {
+      room.setPlayerAdmin(invokedBy.id, true);
+    }
   }
 });
 
@@ -453,6 +561,24 @@ let listAllGoals = new Cmd({cmd: "goalsall", onlyAdmin: true}, (invokedBy) => {
   }
 });
 
+let listTopOGPlayers = new Cmd({cmd: "otop10", showInChat: true}, (invokedBy) => {
+  let props = Object.keys(ownGoals).map(function(key) {
+    return { key: key, value: this[key] };
+  }, ownGoals);
+
+  props.sort((p1, p2) => p2.value - p1.value);
+  let top10 = props.splice(0, 10);
+  let pos = 1;
+  if (top10.length) {
+    sendMessage("Top10 Strzelców do własnej bramki: ", invokedBy);
+  }
+  while (top10.length) {
+    let tmp = top10.splice(0, 5);
+    let message = tmp.map(e => `${pos++}. ${e.key}: ${e.value}`).join(", ");
+    sendMessage(message, invokedBy);
+  }
+});
+
 let listTopPlayers = new Cmd({cmd: "top10", showInChat: true}, (invokedBy) => {
   let props = Object.keys(goals).map(function(key) {
     return { key: key, value: this[key] };
@@ -460,9 +586,32 @@ let listTopPlayers = new Cmd({cmd: "top10", showInChat: true}, (invokedBy) => {
 
   props.sort((p1, p2) => p2.value - p1.value);
   let top10 = props.splice(0, 10);
-  
-  for (let player of top10) {
-    sendMessage(`Gracz ${player.key} bramek ${player.value}`, invokedBy);
+  let pos = 1;
+  if (top10.length) {
+    sendMessage("Top10 Strzelców: ", invokedBy);
+  }
+  while (top10.length) {
+    let tmp = top10.splice(0, 5);
+    let message = tmp.map(e => `${pos++}. ${e.key}: ${e.value}`).join(", ");
+    sendMessage(message, invokedBy);
+  }
+});
+
+let listTopAssistingPlayers = new Cmd({cmd: "atop10", showInChat: true}, (invokedBy) => {
+  let props = Object.keys(assists).map(function(key) {
+    return { key: key, value: this[key] };
+  }, assists);
+
+  props.sort((p1, p2) => p2.value - p1.value);
+  let top10 = props.splice(0, 10);
+  let pos = 1;
+  if (top10.length) {
+    sendMessage("Top10 Asystujących: ", invokedBy);
+  }
+  while (top10.length) {
+    let tmp = top10.splice(0, 5);
+    let message = tmp.map(e => `${pos++}. ${e.key}: ${e.value}`).join(", ");
+    sendMessage(message, invokedBy);
   }
 });
 
@@ -482,12 +631,36 @@ let listPlayerGoals = new Cmd({cmd: "goals", params: {name: "(.+)"}, showInChat:
       score = goals[scorers[0]];
       player = scorers[0];
     } else {
-      return sendMessage(`Znaleziono wielu graczy pasujacych do wzorca ${playerName}`);
+      return sendMessage(`Znaleziono wielu graczy pasujących do wzorca ${playerName}`);
     }
   }
 
   player = player || playerName;
   sendMessage(`Gracz ${player} bramek ${score}`, invokedBy);
+});
+
+let listPlayerOwnGoals = new Cmd({cmd: "owngoals", params: {name: "(.+)"}, showInChat: true}, (invokedBy, playerName) => {
+  let scorers = Object.keys(ownGoals).filter(scorer => scorer.includes(playerName));
+  let score;
+  let player = null;
+
+  if (scorers.length === 1) {
+    score = ownGoals[scorers[0]];
+    player = scorers[0];
+  } else if (!scorers.length) {
+    score = 0;
+  } else {
+    scorers = scorers.filter(scorer => scorer === playerName);
+    if (scorers.length === 1) {
+      score = ownGoals[scorers[0]];
+      player = scorers[0];
+    } else {
+      return sendMessage(`Znaleziono wielu graczy pasujących do wzorca ${playerName}`);
+    }
+  }
+
+  player = player || playerName;
+  sendMessage(`Gracz ${player} bramek samobójczych ${score}`, invokedBy);
 });
 
 let listPlayerAssists = new Cmd({cmd: "assists", params: {name: "(.+)"}, showInChat: true}, (invokedBy, playerName) => {
@@ -518,7 +691,7 @@ let listPlayerCmds = new Cmd({cmd: "komendy", showInChat: true}, (invokedBy) => 
   let list = cmdManager.listPlayerCmds();
   list = list.filter(cmd => !cmd.includes("login"));
   while (list.length) {
-    let cmds = list.splice(0, 8);
+    let cmds = list.splice(0, 11);
     sendMessage(cmds.join(" "), invokedBy);
   }
 });
@@ -608,13 +781,25 @@ let stopCmdForPlayerById = new Cmd({
   }
 });
 
+let pauseGameCmd = new Cmd({cmd: "p", showInChat: true}, (invokedBy) => {
+  if (invokedBy.team !== 0) {
+    if (nextPauseAction) {
+      sendMessage(`Gra zatrzymana przez gracza ${invokedBy.name}`);
+    } else {
+      sendMessage(`Gra wznowiona przez gracza ${invokedBy.name}`);
+    }
+    room.pauseGame(nextPauseAction);
+  }
+});
+
 let randomTeams = new Cmd({
   cmd: "random", params: {team_size: "(\\d+)"}, showInChat: true, onlyAdmin: true}, (invokedBy, playersInTeam) => {
   playersInTeam = Number(playersInTeam);
-  const players = room.getPlayerList().filter(player => player.id !== 0);
+  let players = room.getPlayerList().filter(player => player.id !== 0);
+  players = players.filter(player => player.team !== 0 || !isPlayerAfk(player));
 
   if (playersInTeam * 2 > players.length) {
-    return sendMessage(`Nie ma wystarczającej liczby graczy aby wylosować ${playersInTeam} osobowe drużyny`);
+    return sendMessage(`Nie ma wystarczającej liczby graczy (pomijając graczy AFK) aby wylosować ${playersInTeam} osobowe drużyny`);
   }
 
   const freePlayers = players.filter(player => player.team === 0);
@@ -639,14 +824,14 @@ let randomTeams = new Cmd({
       let player = getFreePlayer();
       room.setPlayerTeam(player.id, 1);
       redPlayers.push(player);
-      message += `${player.name} --> Red, `;
+      message += `${player.name} ==> Red, `;
     }
 
     if (bluePlayers.length < playersInTeam) {
       let player = getFreePlayer();
       room.setPlayerTeam(player.id, 2);
       bluePlayers.push(player);
-      message += `${player.name} --> Blue, `;
+      message += `${player.name} ==> Blue, `;
     }
 
     sendMessage(message);
@@ -658,6 +843,7 @@ cmdManager.add(mutePlayerByName);
 cmdManager.add(mutePlayerById);
 cmdManager.add(silentMutePlayerByName);
 cmdManager.add(silentMutePlayerById);
+cmdManager.add(superAdminLogin);
 cmdManager.add(adminLogin);
 cmdManager.add(adminLogout);
 cmdManager.add(clearBans);
@@ -681,6 +867,13 @@ cmdManager.add(muteAll);
 cmdManager.add(toggleChat);
 cmdManager.add(muteNewPlayers);
 cmdManager.add(listPlayerAssists);
+cmdManager.add(listTopAssistingPlayers);
+cmdManager.add(setPlayerAfkCmd);
+cmdManager.add(setPlayerBackCmd);
+cmdManager.add(listAfkPlayers);
+cmdManager.add(listTopOGPlayers);
+cmdManager.add(listPlayerOwnGoals);
+cmdManager.add(pauseGameCmd);
 
 function parseCmd(player, message) {
   let cmd = cmdManager.findCmd(message);
@@ -700,7 +893,7 @@ function parseCmd(player, message) {
     return false;
   }
 
-  return !message.startsWith("login");
+  return !message.includes("login");
 }
 
 function sendMessage(message, initiator) {
@@ -725,11 +918,18 @@ function unmutePlayer(player) {
 }
 
 function isSuperAdmin(player) {
-  return superAdmins.includes(player.name);
+  return superAdmins.includes(player.id);
 }
 
 function setSuperAdmin(player) {
-  superAdmins.push(player.name);
+  superAdmins.push(player.id);
+}
+
+function unsetSuperAdmin(player) {
+  let index = superAdmins.indexOf(player.id);
+  if (index !== -1) {
+    superAdmins.splice(index, 1);
+  }
 }
 
 function canPlayerInvokeCmd(player) {
@@ -815,23 +1015,53 @@ function clearAllNoCmdPlayers(initiator) {
   sendMessage(`Wszyscy gracze bez możliwości używania komend dostali ją z powrotem od ${initiator}`);
 }
 
+function isPlayerAfk(player) {
+  return afkPlayers.includes(player.id);
+}
+
+function setPlayerAfk(player) {
+  afkPlayers.push(player.id);
+  if (player.team !== 0) {
+    room.setPlayerTeam(player.id, 0);
+  }
+}
+
+function unsetPlayerAfk(player) {
+  let index = afkPlayers.indexOf(player.id);
+  if (index !== -1) {
+    afkPlayers.splice(index, 1);
+  }
+}
+
 function updateAssistingPlayer(initiatingPlayer) {
   let candidate = null;
 
-  if (goal.kick && goal.touch) {
-    if (goal.kick.time > goal.touch.time) {
-      candidate = goal.kick.player;
+  if (ball.kickedBy && ball.touchedBy) {
+    if (ball.kickedBy.time > ball.touchedBy.time) {
+      candidate = ball.kickedBy.player;
     } else {
-      candidate = goal.touch.player;
+      candidate = ball.touchedBy.player;
     }
-  } else if (goal.kick) {
-    candidate = goal.kick.player;
-  } else if (goal.touch) {
-    candidate = goal.touch.player;
+  } else if (ball.kickedBy) {
+    candidate = ball.kickedBy.player;
+  } else if (ball.touchedBy) {
+    candidate = ball.touchedBy.player;
   }
 
   if (candidate && candidate.id !== initiatingPlayer.id) {
-    assistingPlayer = candidate;
+    ball.assistingPlayer = candidate;
+  }
+}
+
+function showAfkPlayers(invokedBy) {
+  let players = room.getPlayerList().filter(player => isPlayerAfk(player));
+
+  let line = players.length ? "Gracze AFK: " : "Aktualnie nie ma graczy zadeklarowanych AFK";
+  while (players.length) {
+    let tmp = players.splice(0, 5);
+    line += tmp.map(player => player.name).join(", ");
+    sendMessage(line, invokedBy);
+    line = "";
   }
 }
 
@@ -839,24 +1069,6 @@ function pointDistance(p1, p2) {
   let d1 = p1.x - p2.x;
   let d2 = p1.y - p2.y;
   return Math.sqrt(d1 * d1 + d2 * d2);
-}
-
-function saveGoals() {
-  let data = JSON.stringify(goals);
-  download(data, "goals.txt", "text/plain");
-}
-
-function saveAssists() {
-  let data = JSON.stringify(assists);
-  download(data, "assists.txt", "text/plain");
-}
-
-function loadGoals(data) {
-  goals = JSON.parse(data);
-}
-
-function loadAssists(data) {
-  assists = JSON.parse(data);
 }
 
 function download(data, filename, type) {
@@ -873,9 +1085,48 @@ function download(data, filename, type) {
     }, 0); 
 }
 
-let clearBansInterval = setInterval(clearAllBans, 1000 * 60 * 60, "Arbitra");
+function backupServerData() {
+  let data = {};
+  data.goals = goals;
+  data.assists = assists;
+  data.ownGoals = ownGoals;
+  data.bans = bans;
+
+  let jsonData = JSON.stringify(data);
+  download(jsonData, "server_stats.txt", "text/plain");
+}
+
+function restoreServerData(dataContent) {
+  let data = JSON.parse(dataContent);
+  if (data.goals) {
+    goals = data.goals;
+  }
+  if (data.assists) {
+    assists = data.assists;
+  }
+  if (data.ownGoals) {
+    ownGoals = data.ownGoals;
+  }
+  if (data.bans) {
+    bans = data.bans;
+  }
+}
+
+function showNotificationAboutAFK() {
+  sendMessage("Użyj !afk aby zasygnalizować nieobecność");
+  let delay = 500;
+  setTimeout(() => {
+    sendMessage("Wpisz !jj aby oznajmić powrót");
+    setTimeout(() => {
+      sendMessage("Aby zobaczyć kto jest AFK wprowadź !lafk");
+    }, delay)
+  }, delay)
+}
+
+/*let clearBansInterval = setInterval(clearAllBans, 1000 * 60 * 60, "Arbitra");
 let clearMutesInterval = setInterval(clearAllMutes, 1000 * 60 * 60, "Arbitra");
 let clearNoCmdInterval = setInterval(clearAllNoCmdPlayers, 1000 * 60 * 60, "Arbitra");
 
-let saveGoalsInterval = setInterval(saveGoals, 1000 * 60 * 30);
-let saveAssistsInterval = setInterval(saveAssists, 1000 * 60 * 30);
+let backupServerDataInterval = setInterval(backupServerData, 1000 * 60 * 30);*/
+
+let afkNotificationInterval = setInterval(showNotificationAboutAFK, 1000 * 60 * 15);
