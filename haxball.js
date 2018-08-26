@@ -170,7 +170,7 @@ room.onPlayerAdminChange = (changedPlayer, byPlayer) => {
   }
 };
 
-room.onStadiumChange = (newStadiumName, byPlayer) => {
+/*room.onStadiumChange = (newStadiumName, byPlayer) => {
   // Game host has to be set as SuperAdmin
   if (!isSuperAdmin(byPlayer)) {
     if (/finezja/i.exec(newStadiumName)) {
@@ -185,7 +185,7 @@ room.onStadiumChange = (newStadiumName, byPlayer) => {
     showMapCmds();
     room.setCustomStadium(maps.powerClassic);
   }
-};
+};*/
 
 room.onPlayerJoin = player => {
   // updateAdmins();
